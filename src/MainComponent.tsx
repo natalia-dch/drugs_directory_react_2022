@@ -20,23 +20,19 @@ import AdminList from './pages_admin/AdminListPage';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 class Main extends Component {
-
-  constructor(props) {
-    super(props);
-  }
   render(){
     return(
       <Router>
         <Routes>
-          <Route exact path="/" element={<div><Header /><Home /><Footer/></div>} />
-          <Route path="/about" element={<div><Header /><About /><Footer/></div>} />
+          <Route path="/" element={<div><Header /><Home /><Footer/></div>} />
+          <Route path="/about" element={<div><Header /><Home /><Footer/></div>} />
           <Route path="/contacts" element={<div><Header /><Contact /><Footer/></div>} />
           <Route path="/drugs" element={<div><Header /><Drugs /><Footer/></div>} />
           <Route path="/interactions" element={<div><Header /><Interactions /><Footer/></div>} />
           <Route path="/news" element={<div><Header /><News /><Footer/></div>} />
           <Route path="/recomendations" element={<div><Header /><Recomendations /><Footer/></div>} />
           <Route path="/video" element={<div><Header /><Video /><Footer/></div>} />
-          <Route exact path="/admin" element={<Login />} />
+          <Route path="/admin" element={<Login />} />
           <Route path="/admin/moderators" element={<div><AdminMenu/><AdminList/></div>} />
           <Route path="/admin/drugs" element={<div><AdminMenu/><AdminList/></div>} />
           <Route path="/admin/site" element={<div><AdminMenu/><FormChangeSite/></div>} />

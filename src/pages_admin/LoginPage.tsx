@@ -14,7 +14,7 @@ function Login() {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: any) {
     navigate("/admin/moderators");
     // event.preventDefault();
   }

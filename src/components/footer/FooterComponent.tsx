@@ -21,7 +21,7 @@ class Footer extends Component {
   }
   render(){
 
-    return(       <AppBar position="static" style={{color: "white", fontSize: "16px", position: "fixed", bottom: 0}}  >
+    return(       <AppBar position="static" style={{color: "white", backgroundColor: "#07458d", fontSize: "16px", position: "fixed", bottom: 0}}  >
           <Container maxWidth="md">
             <Toolbar>
                 <div className="par">{text}</div>

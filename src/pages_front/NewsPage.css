@@ -1,0 +1,42 @@
+.wrapper{
+  margin: 60px;
+}
+
+p{
+  line-height:1.2em;
+  width: 60vw;
+  font-size: 20px;
+  text-overflow: ellipsis;
+  margin-bottom: 0px;
+}
+
+.closed{
+  height:6em;
+  overflow:hidden;
+}
+.opened{
+  height:auto;
+  overflow:visible;
+}
+img{
+}
+.card{
+  margin: 24px;
+  border: 0px;
+}
+.moreBtn1{
+  margin:0px;
+text-align: end;
+  height:auto;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.moreBtn2{
+  margin:0px;
+text-align: end;
+  height:auto;
+  font-weight: bold;
+  cursor: pointer;
+  visibility: hidden;
+}

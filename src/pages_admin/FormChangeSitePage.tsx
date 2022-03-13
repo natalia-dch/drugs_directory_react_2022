@@ -11,7 +11,7 @@ function FormChangeSite() {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: { preventDefault: () => void; }) {
     event.preventDefault();
   }
 
