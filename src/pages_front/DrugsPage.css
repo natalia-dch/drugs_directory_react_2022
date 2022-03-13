@@ -1,0 +1,26 @@
+.drugCard:hover{
+  cursor: pointer;
+}
+.drugCard{
+    margin: 10px;
+}
+.bigCard{
+    margin: 0px;
+    padding:0px;
+}
+
+.drugInput{
+  width: 100%;
+}
+hr{
+  height: 3px;
+}
+.boldName{
+  font-weight: bold;
+}
+
+.notOverFl{
+  white-space: initial;
+  word-break: break-word;
+  width: auto;
+}
