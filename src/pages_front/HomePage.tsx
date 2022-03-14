@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import Slider from '../components/slider/Slider';
 import slider1 from '../shared/slider1.jpg'

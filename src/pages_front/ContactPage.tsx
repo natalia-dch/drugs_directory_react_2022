@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component, useState } from 'react';
 import { Form, Button, FormGroup, FormControl, ControlLabel, FormLabel } from "react-bootstrap";
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -65,7 +66,7 @@ function Contact() {
             as="textarea" rows={3}
           />
         </Form.Group>
-        
+
 <Button type="submit" block disabled={!validateForm()}>
   Задать вопрос
 </Button>

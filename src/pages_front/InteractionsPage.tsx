@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import Interactions from '../contracts'
 import Drugs from './DrugsPage';

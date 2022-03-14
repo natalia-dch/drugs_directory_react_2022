@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import Grid from '@mui/material/Grid';
 import './Video.css';

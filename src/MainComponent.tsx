@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import Header from './components/header/HeaderComponent';
 import Footer from './components/footer/FooterComponent';

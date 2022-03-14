@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import './DrugsPage.css';
