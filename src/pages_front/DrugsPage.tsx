@@ -119,10 +119,10 @@ const DrugsPure = (props: IProps) => {
         {isLoading ? "Loading..." :
             isError ? "Error" :
                 drugs.length > 0 ? (drugs.map((item) => (
-                    <BriefCard key={item.id} isBold={props.isDrugPage && props.sItem != -1 && props.sItem == item.id}
+                    <BriefCard key={item.id} isBold={props.isDrugPage && props.sItem === item.id}
                         item={item}
                         isDrugPage={props.isDrugPage}
-                        handleClick={() => handleDrugClick(item.id)} />
+                        handleClick={() => props.handleClick(item.id)} />
                 )
                 )
                 ) : "Ничего не нашлось. Сбросить фильтрацию?"
