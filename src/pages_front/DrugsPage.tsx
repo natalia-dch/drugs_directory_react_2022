@@ -78,8 +78,8 @@ const DrugsPure = (props: IProps) => {
     const [search, setSearch] = useState("");
     const [realSearch, setRealSearch] = useState("");
 
-    const { data, isLoading, isError
-    } = useQuery(["brief", realSearch], () => axios.get(`http://localhost:8080/api/drugs/brief?search=${realSearch}`));
+    const { data: drugs, isLoading, isError
+    } = useQuery(["brief", realSearch], () => axios.get<Brief[]>(`http://localhost:8080/api/drugs/brief?search=${realSearch}`).then(v => v.data));
 
     const handleSearch = (value) => {
         setRealSearch(value)
@@ -118,7 +118,7 @@ const DrugsPure = (props: IProps) => {
             }} />
         {isLoading ? "Loading..." :
             isError ? "Error" :
-                data.data.length > 0 ? (data.data.map((item) => (
+                drugs.length > 0 ? (drugs.map((item) => (
                     <BriefCard key={item.id} isBold={props.isDrugPage && props.sItem != -1 && props.sItem == item.id}
                         item={item}
                         isDrugPage={props.isDrugPage}
