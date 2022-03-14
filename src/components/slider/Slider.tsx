@@ -14,7 +14,7 @@ const Slider = (props) => {
           </Carousel.Item>)});
 
   return(
-    <div className="wrapper">
+    <div className="wrapperS">
     <Carousel className="carousel">
        {carouselItems}
   </Carousel>

@@ -119,7 +119,7 @@ handleSearch(value) {
         handleClick={() => this.handleDrugClick(item.id)} />
       )
     })
-    return(<div className="wrapper">
+    return(<div className={this.props.isDrugPage?"wrapper":"wrapperSL"}>
     <TextField className="drugInput"
     onKeyPress={(e) => {
  if (e.key === 'Enter') {

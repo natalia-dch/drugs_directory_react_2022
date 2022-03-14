@@ -2,6 +2,12 @@
     width: 30vw;
 }
 p .interactions{
-    width=30vw;
+    width: 30vw;
     overflow: visible;
+}
+
+.wrapperI{
+  margin: 60px;
+  margin-top: 60px;
+  margin-left: 0px;
 }

@@ -1,6 +1,11 @@
 .drugCard:hover{
   cursor: pointer;
 }
+.wrapperSL{
+  margin-right: 60px;
+  margin-top: 20px;
+
+}
 .drugCard{
     margin: 10px;
 }

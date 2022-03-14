@@ -39,7 +39,7 @@ class Recomendations extends Component<IProps, IState> {
         <li key={item.id}><a href={"#"+item.title}>{item.title}</a></li>
       )
     })
-    return(<div className="wrapper">
+    return(<div className="wrapperR">
       <div>
       <h3>Клинические рекомендации</h3>
       <p>На данной странице находятся клинические рекомендации по диагностике и лечению следующих заболеваний у пациентов фтизиатрического отделения:</p>

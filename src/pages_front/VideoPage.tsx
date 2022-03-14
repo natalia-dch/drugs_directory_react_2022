@@ -23,7 +23,7 @@ class Video extends Component {
         </Grid>
       )
     })
-    return(<div className="wrapper">
+    return(<div className="wrapperV">
     <Grid container spacing={2}>
        {videoCards}
     </Grid>
