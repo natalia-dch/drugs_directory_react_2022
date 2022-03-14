@@ -8,7 +8,7 @@ import axios from 'axios';
 import './InteractionPage.css';
 
 const Result = ({ drug, substance }: { drug: number, substance: number }) => {
-    const { isLoading, isError, data } = useQuery(['inter', drug, substance], () => axios.get<Interaction[]>(`http://localhost:8080/api/drugs/${drug}/interaction/${substance}`).then(a => a.data));
+  const { isLoading, isError, data } = useQuery(['inter', drug, substance], () => axios.get<Interaction[]>(`http://localhost:8080/api/drugs/${drug}/interaction/${substance}`).then(a => a.data), { retry: -1});
 
     if (isLoading) return (
         <div className="wrapperI">
@@ -24,6 +24,7 @@ const Result = ({ drug, substance }: { drug: number, substance: number }) => {
     }
     else {
         const interaction = data[0];
+      console.log(interaction)
         return (
             <div className="wrapperI">
                 <h5>Вид взаимодействия</h5>
@@ -48,7 +49,7 @@ const InteractionsPage = () => {
                 </Grid>
                 <Grid item xs={4}>
                     <h3>Сопутствующие <br /> препараты</h3>
-                    <Drugs className="intComp" sItem={substance} handleClick={setSubstance} isDrugPage={false} />
+                    <Drugs className="intComp" type="acting_substances" sItem={substance} handleClick={setSubstance} isDrugPage={false} />
                 </Grid>
                 <Grid item xs={4}>
                     <h3>Результат</h3>

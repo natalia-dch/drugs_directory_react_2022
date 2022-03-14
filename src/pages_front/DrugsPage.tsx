@@ -67,6 +67,7 @@ function BriefCard(props) {
 
 interface IProps {
     isDrugPage?: boolean;
+    type?: 'drugs' | 'acting_substances'
 }
 
 interface IState {
@@ -75,25 +76,15 @@ interface IState {
 
 
 const DrugsPure = (props: IProps) => {
+    const { type = 'drugs' } = props;
     const [search, setSearch] = useState("");
     const [realSearch, setRealSearch] = useState("");
 
     const { data: drugs, isLoading, isError
-    } = useQuery(["brief", realSearch], () => axios.get<Brief[]>(`http://localhost:8080/api/drugs/brief?search=${realSearch}`).then(v => v.data));
+    } = useQuery(['brief', realSearch, type], () => axios.get<Brief[]>(`http://localhost:8080/api/${type}/brief?search=${realSearch}`).then(v => v.data));
 
     const handleSearch = (value) => {
         setRealSearch(value)
-    }
-
-    const handleDrugClick = (id) => {
-        console.log("id" + id + "was clicked");
-        if (id == -1) {
-            setSearch("");
-            handleSearch("");
-        }
-        else {
-            props.handleClick(id);
-        }
     }
 
     return (<div className={props.isDrugPage ? "wrapper" : "wrapperSL"}>
@@ -106,7 +97,7 @@ const DrugsPure = (props: IProps) => {
             id="input-with-icon-adornment"
             value={search}
             onChange={(e) =>
-                setRealSearch(e.target.value)
+                setSearch(e.target.value)
             }
             label="поиск по названию" variant="standard"
             InputProps={{
@@ -119,7 +110,7 @@ const DrugsPure = (props: IProps) => {
         {isLoading ? "Loading..." :
             isError ? "Error" :
                 drugs.length > 0 ? (drugs.map((item) => (
-                    <BriefCard key={item.id} isBold={props.isDrugPage && props.sItem === item.id}
+                    <BriefCard key={item.id} isBold={props.sItem === item.id}
                         item={item}
                         isDrugPage={props.isDrugPage}
                         handleClick={() => props.handleClick(item.id)} />
