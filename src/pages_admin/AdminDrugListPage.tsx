@@ -1,12 +1,12 @@
 // @ts-nocheck
 import React, {Component, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import './DrugsPage.css';
-import Button from '@mui/material/Button';
-import { InputAdornment, Input, Card, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+// import './DrugsPage.css';
+
 import { useNavigate } from "react-router-dom";
 import Brief from '../contracts'
+import List from '../components/basic_list/list';
+import SearchForm from '../components/search/search_form';
 
 
 interface IProps {
@@ -31,7 +31,7 @@ const myDrugs = [
       { "id": 11, "name": "этамбутол"}
 ];
 
-function BriefCard(props) {
+function AddCard(props) {
     const navigate = useNavigate();
     return(
       <div key={props.item.id} className="bigCard">
@@ -39,7 +39,7 @@ function BriefCard(props) {
         props.handleClick(props.item.id);
         if(props.item.id!=-1){
           if(props.isDrugPage){
-            navigate(props.item.id);
+            navigate('admin/drugs/' + props.item.id);
           }
     }
   }} >
@@ -50,15 +50,36 @@ function BriefCard(props) {
     )
 }
 
-class Drugs extends Component<IProps, IState> {
+function BriefCard(props) {
+    const navigate = useNavigate();
+    return(
+      <div key={props.item.id} className="bigCard">
+      <div className="drugCard" onClick={() => {
+        props.handleClick(props.item.id);
+        if(props.item.id!=-1){
+          if(props.isDrugPage){
+            navigate("/drug");
+          }
+    }
+  }} >
+      <p className={props.isBold?"boldName notOverFl":"notOverFl"}>{props.item.name}</p>
+      </div>
+      <hr/>
+      </div>
+    )
+}
+
+class AdminDrugList extends Component<IProps, IState> {
   constructor(props : IProps) {
   super(props);
     this.state = {
-      drugs: [],
+      items: myDrugs,
       input: "",
     }
     this.handleSearch = this.handleSearch.bind(this);
     this.handleDrugClick = this.handleDrugClick.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.addNew = this.addNew.bind(this);
   }
 
 componentDidMount() {
@@ -76,6 +97,14 @@ this.handleSearch("");
 else{
   this.props.handleClick(id);
 }
+}
+addNew() {
+console.log("new was clicked");
+  // this.props.handleClick(id); //TODO
+}
+deleteItem(id) {
+console.log("id"+item.name+"was deleted");
+  // this.props.handleClick(id); //TODO
 }
 
 handleSearch(value) {
@@ -111,39 +140,17 @@ handleSearch(value) {
       });}
     }
 
-  render(){
-    const elems = this.state.drugs.map((item)=>{
-      return(
-        <BriefCard isBold={!this.props.isDrugPage && this.props.sItem!=-1 && this.props.sItem==item.id }
-        item={item}
-        isDrugPage={this.props.isDrugPage}
-        handleClick={() => this.handleDrugClick(item.id)} />
-      )
-    })
-    return(<div className={this.props.isDrugPage?"wrapper":"wrapperSL"}>
-    <TextField className="drugInput"
-    onKeyPress={(e) => {
- if (e.key === 'Enter') {
-   this.handleSearch(e.target.value);
- }}}
-       id="input-with-icon-adornment"
-       value={this.state.input}
-       onChange={(e) =>
-         this.setState({
-           input : e.target.value,
-         })
-       }
-      label="поиск по названию" variant="standard"
-       InputProps={{
-   startAdornment: (
-     <InputAdornment position="start">
-                  <SearchIcon />
-     </InputAdornment>
-   ),
- }}/>
-       {elems}
-      </div>)
+render(){
+return(
+<div className={this.props.isDrugPage?"wrapper":"wrapperSL"}>
+<SearchForm
+input={this.state.input}
+handleChange={(value) =>  this.setState({  input : value,  })}
+handleSearch={this.handleSearch}
+/>
+<List items={this.state.items} handleClick={this.handleClick} addNew={this.addNew} name="лекарство" deleteItem={this.deleteItem}/>
+</div>)
   }
 }
 
-export default Drugs;
+export default AdminDrugList;

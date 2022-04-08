@@ -115,6 +115,16 @@ system: {  "id": 0, "system": "Со стороны ЦНС"}
   }
 
   render(){
+    let request = '/api/drugs/'+this.props.id;
+    axios.get(request)
+      .then(res => {
+    const result = res.data;
+    console.log(result)
+    this.setState({
+      drug: result,
+    })});
+
+
     let tradenames = this.state.drug.trade_names.map((tn)=>{
       return(tn.trade_name+" : "+tn.pharm_form+",\n");
     });

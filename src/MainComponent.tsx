@@ -17,7 +17,12 @@ import DrugPage from './pages_front/DrugPage';
 import Login from './pages_admin/LoginPage';
 import FormDrug from './pages_admin/FormDrugPage';
 import FormChangeSite from './pages_admin/FormChangeSitePage';
-import AdminList from './pages_admin/AdminListPage';
+import ChangeVideos from './pages_admin/ChangeVideosPage';
+import ChangeRecs from './pages_admin/ChangeRecs';
+import ChangeNews from './pages_admin/ChangeNewsPage';
+import ProcessFeedback from './pages_admin/ProcessFeedbackPage';
+import AdminDrugList from './pages_admin/AdminDrugListPage';
+import AdminModeratorsList from './pages_admin/AdminModeratorsListPage';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -28,8 +33,10 @@ class Main extends Component {
   super(props);
   this.state = {
       drugToShow: -1,
+      itemToChange: -1,
     }
     this.showDrug = this.showDrug.bind(this);
+    this.changeItem = this.changeItem.bind(this);
   }
 showDrug(id) {
       if(id!=-1)
@@ -37,6 +44,12 @@ showDrug(id) {
         drugToShow: id,
       });}
     }
+changeItem(id) {
+          if(id!=-1)
+          {this.setState({
+            itemToChange: id,
+          });}
+        }
   render(){
     return(
       <Router>
@@ -51,9 +64,13 @@ showDrug(id) {
           <Route path="/recomendations" element={<div><Header /><Recomendations /><Footer/></div>} />
           <Route path="/video" element={<div><Header /><Video /><Footer/></div>} />
           <Route path="/admin" element={<Login />} />
-          <Route path="/admin/moderators" element={<div><AdminMenu/><AdminList/></div>} />
-          <Route path="/admin/drugs" element={<div><AdminMenu/><AdminList/></div>} />
-          <Route path="/admin/site" element={<div><AdminMenu/><FormChangeSite/></div>} />
+          <Route path="/admin/moderators" element={<div><AdminMenu/><AdminModeratorsList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
+          <Route path="/admin/drugs" element={<div><AdminMenu/><AdminDrugList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
+          <Route path="admin/:userId" element={<FormDrug />} />
+          <Route path="/admin/news" element={<div><AdminMenu/><ChangeNews/></div>} />
+          <Route path="/admin/video" element={<div><AdminMenu/><ChangeVideos/></div>} />
+          <Route path="/admin/recs" element={<div><AdminMenu/><ChangeRecs/></div>} />
+          <Route path="/admin/feedback" element={<div><AdminMenu/><ProcessFeedback/></div>} />
         </Routes>
       </Router>
     )

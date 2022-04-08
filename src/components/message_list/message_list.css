@@ -1,0 +1,32 @@
+.relativeCard {
+   position: relative;
+}
+
+
+.deleteCard{
+position: absolute;
+top: 0px;
+right: 0px;
+background-color: coral;
+width: 20%;
+padding: 8px;
+color: white;
+}
+.processCard{
+position: absolute;
+top: 30px;
+right: 0px;
+background-color: red;
+width: 20%;
+padding: 8px;
+color: white;
+}
+.respondCard{
+position: absolute;
+top: 60px;
+right: 0px;
+background-color: blue;
+width: 20%;
+padding: 8px;
+color: white;
+}

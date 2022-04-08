@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
-    marginLeft: theme.spacing(10),
+    marginLeft: theme.spacing(5),
     display: "flex",
   },
  logo: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "white",
     fontSize: "16px",
-    marginLeft: theme.spacing(20),
+    marginLeft: theme.spacing(5),
     "&:hover": {
       color: "yellow",
       borderBottom: "1px solid white",
@@ -42,13 +42,22 @@ function AdminMenu() {
         </Typography>
           <div className={classes.navlinks}>
             <Link to="/admin/moderators" className={classes.link}>
-              изменить список модераторов
+              список модераторов
             </Link>
             <Link to="/admin/drugs" className={classes.link}>
-              изменить список лекарств
+              список лекарств
             </Link>
-            <Link to="/admin/site" className={classes.link}>
-              изменить наполнение сайта
+            <Link to="/admin/recs" className={classes.link}>
+              страница "клинические рекомендации"
+            </Link>
+            <Link to="/admin/news" className={classes.link}>
+              страница "новости"
+            </Link>
+            <Link to="/admin/video" className={classes.link}>
+              страница "видео"
+            </Link>
+            <Link to="/admin/feedback" className={classes.link}>
+              сообщения пользователей
             </Link>
           </div>
       </Toolbar>

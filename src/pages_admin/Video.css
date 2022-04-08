@@ -1,0 +1,20 @@
+.wrapperV{
+  margin: 50px;
+}
+iframe {
+    width: 30vw;
+    height: 18.87vw; /* 100/56.25 = 560/315 = 1.778 */
+}
+.videoContainer {
+   position: relative;
+}
+
+
+.deleteBtnV{
+position: absolute;
+top: 30px;
+left: 20px;
+background-color: coral;
+width: 96%;
+padding: 10px;
+}
