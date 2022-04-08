@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 import Grid from '@mui/material/Grid';
 import './Video.css';
+import VideoForm from '../components/dialogs/videoForm';
 
 function VideoCard(props) {
   const [isShown, setIsShown] = useState(false);
@@ -23,16 +24,16 @@ function VideoCard(props) {
 }
 
 function AddVideo(props) {
-  const [link, setLink] = useState("");
+const [link, setLink] = useState("");
 
-  function validateForm() {
+const validateForm = () => {
     return link.length > 0;
   }
 
   return (
     <div>
       <Form onSubmit={props.handleSubmit}>
-        <Form.Group size="lg" class="form-inline" controlId="link">
+        <Form.Group size="lg" className="form-inline" controlId="link">
           <Form.Control
             autoFocus
             type="text"
@@ -40,52 +41,53 @@ function AddVideo(props) {
             onChange={(e) => setLink(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Добавить видео
-        </Button>
+        <Button size="lg" type="submit">Добавить видео</Button>
       </Form>
     </div>
   );
 }
+const myVideos = ["https://www.youtube.com/embed/T3rqrPchOTo","https://www.youtube.com/embed/rZ3DiIc50nk",
+"https://www.youtube.com/embed/wKraDSkt5IU",
+"https://www.youtube.com/embed/L6ueL6sUo6Y","https://www.youtube.com/embed/GdybYT-vffg"];
 
+export default function ChangeVideos () {
+const [items, setItems] = React.useState(myVideos);
+const [open, setOpen] = React.useState(false);
+const [link,setLink] = React.useState(myVideos[0]);
 
-class ChangeVideos extends Component {
-
-
-  constructor(props) {
-  super(props);
-    this.state = {
-      videos: ["https://www.youtube.com/embed/T3rqrPchOTo","https://www.youtube.com/embed/rZ3DiIc50nk",
-      "https://www.youtube.com/embed/wKraDSkt5IU", "https://www.youtube.com/embed/HIku1wIv9AM",
-    "https://www.youtube.com/embed/L6ueL6sUo6Y","https://www.youtube.com/embed/GdybYT-vffg"]
-    }
-  }
-  addVideo(link){
-    alert("added"+link)
-    this.setState({
-    videos: this.state.videos.concat([link])
-  })
-  }
-  deleteVideo(index){
-    alert("deleted"+index)
-    this.setState({
-    videos: this.state.videos.splice(index, 1), //delete
-  })
+const addVideo = (link1) => {
+    console.log("adding"+link1)
+    // setLink(link1);
+    setOpen(true);
   }
 
-  render(){
-    const videoCards = this.state.videos.map((src,id)=>{
+const handleClose = (item,isSuccess) => {
+  setOpen(false);
+  console.log(item);
+  if(isSuccess){
+  setItems([...items,item])
+  }
+
+};
+
+const deleteVideo = (index) => {
+  setLink(items[0]);
+  console.log("deleting",index)
+  const newList = [].concat(items) // Clone array with concat or slice(0)
+  newList.splice(index, 1);
+  setItems(newList);
+  }
+
+const videos = items.map((src,id)=>{
       return(
-<VideoCard src={src} id={id} delete={this.deleteVideo} />
+<VideoCard src={src} id={id} delete={deleteVideo} />
       )
-    })
-    return(<div className="wrapperV">
-    <AddVideo handleSubmit={this.addVideo} />
+    });
+return(<div className="wrapperV">
+    <VideoForm isOpen={open} item={link} handleClose={handleClose}/>
+    <AddVideo handleSubmit={addVideo} />
     <Grid container spacing={2}>
-       {videoCards}
+       {videos}
     </Grid>
       </div>)
-  }
 }
-
-export default ChangeVideos;

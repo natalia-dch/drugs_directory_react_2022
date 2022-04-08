@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import RadioBtn from './radioBtn';
+import CheckBx from './checkBox';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,8 +11,7 @@ import Button from '@mui/material/Button';
 
 
 function FeedbackFilter(props) {
-  const [value1, setValue1] = React.useState(-1);
-  const [value2, setValue2] = React.useState(-1);
+  const [values, setValues] = React.useState([true,true,true,true]);
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState('Choose wisely');
 
@@ -20,24 +19,24 @@ function FeedbackFilter(props) {
     setHelperText(' ');
     setError(false);
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    props.filter(value1,value2);
-    if(value1 != -1 && value2 != -1){
-      setHelperText('Please select an option.');
+  const handleChange = (n,value) => {
+    console.log(n,value);
+    console.log(n+1-2*(n%2),values[n+1-2*(n%2)]);
+    if(!value && !props.filter[n+1-2*(n%2)]){
+      setHelperText('Ошибка');
       setError(true);
+    }
+    else{
+      props.changeFilter(n,value);
+    setHelperText('');
     }
   };
 return(
-  <form onSubmit={handleSubmit}>
+  <form>
   <FormControl sx={{ m: 3 }} error={error} variant="standard">
-  <RadioBtn handleChange={(value)=>{setValue1(value); handleRadioChange()}} label="тип пользователя" opt1="пациент" opt2="мед работник"/>
-  <RadioBtn handleChange={(value)=>{setValue1(value); handleRadioChange()}} label="тип сообщения" opt1="необработанное" opt2="обработанное"/>
+  <CheckBx  v1={props.filter[0]} v2={props.filter[1]} handleChange={(i,value)=>handleChange(i,value)} label="тип пользователя" opt1="пациент" opt2="мед работник"/>
+  <CheckBx  v1={props.filter[2]} v2={props.filter[3]} handleChange={(i,value)=>handleChange(2+i,value)} label="тип сообщения" opt1="необработанное" opt2="обработанное"/>
     <FormHelperText>{helperText}</FormHelperText>
-    <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
-      Отфильтровать
-    </Button>
   </FormControl>
 </form>
   )
