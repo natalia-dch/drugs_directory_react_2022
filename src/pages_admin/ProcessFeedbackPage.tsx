@@ -54,9 +54,15 @@ setItems(newList);
 // filterMessages()
   // this.props.handleClick(id); //TODO
 }
-const composeEmail = (id) => {
+const createBody = (feedback) => {
+  return (`Добрый день, ${feedback.name}\nОтвечаем на Ваш вопрос: ${feedback.text}\n`)
+}
+const createTitle = () => {
+  return `«НМИЦ ФПИ» Минздрава России: отвечаем на вопрос`
+}
+const composeEmail = (feedback) => {
 console.log("composing email");
-window.location = "mailto:xyz@yourapplicationdomain.com";
+window.location = `mailto:${feedback.email}?subject=${createTitle()}&body=${createBody(feedback)}`;
   // this.props.handleClick(id); //TODO
 }
 const filterMessages = () => {

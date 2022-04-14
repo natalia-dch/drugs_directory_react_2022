@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import './Video.css';
 import VideoForm from '../components/dialogs/videoForm';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function VideoCard(props) {
   const [isShown, setIsShown] = useState(false);
@@ -26,6 +27,7 @@ function VideoCard(props) {
   )
 }
 
+
 function AddVideo(props) {
 const [link, setLink] = useState("");
 const isMedium = useMediaQuery('(max-width:850px)');
@@ -37,17 +39,24 @@ const validateForm = () => {
 
   return (
     <div>
-      <Form onSubmit={props.handleSubmit}>
+      <Grid container spacing={2}>
+      <Grid item xs={9}>
         <Form.Group size="lg" className="form-inline" controlId="link">
           <Form.Control
+            className="addVidForm"
             autoFocus
             type="text"
             value={link}
             onChange={(e) => setLink(e.target.value)}
           />
         </Form.Group>
-        <Button size="lg" type="submit">Добавить видео</Button>
-      </Form>
+        </Grid>
+        <Grid item xs={3}>
+        <Button variant="flat" size="lg" onClick={() => props.handleSubmit(link)}>Добавить видео</Button>
+        </Grid>
+        </Grid>
+        <FormHelperText>{props.helperText}</FormHelperText>
+        <hr/>
     </div>
   );
 }
@@ -59,11 +68,25 @@ export default function ChangeVideos () {
 const [items, setItems] = React.useState(myVideos);
 const [open, setOpen] = React.useState(false);
 const [link,setLink] = React.useState(myVideos[0]);
+const [helperText, setHelperText] = React.useState("");
 
 const addVideo = (link1) => {
-    console.log("adding"+link1)
+     console.log("adding"+link1)
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = link1.match(regExp);
+    if (match && match[7].length == 11) {
+      console.log("extracted"+match[7])
+      setLink(match[7]);
+      setOpen(true);
+    } else {
+      console.log("wrong")
+      setHelperText("Неправильная ссылка")
+    }
     // setLink(link1);
-    setOpen(true);
+
+  }
+  function extractVideoID(url) {
+
   }
 
 const handleClose = (item,isSuccess) => {
@@ -76,8 +99,6 @@ const handleClose = (item,isSuccess) => {
 };
 
 const deleteVideo = (index) => {
-  setOpen(true);
-  setLink(items[0]);
   console.log("deleting",index)
   const newList = [].concat(items) // Clone array with concat or slice(0)
   newList.splice(index, 1);
@@ -86,12 +107,12 @@ const deleteVideo = (index) => {
 
 const videos = items.map((src,id)=>{
       return(
-<VideoCard src={src} id={id} delete={deleteVideo} />
+  <VideoCard src={src} key={id} id={id} delete={deleteVideo} />
       )
     });
 return(<div className="wrapperV">
     <VideoForm isOpen={open} item={link} handleClose={handleClose}/>
-    <AddVideo handleSubmit={addVideo} />
+    <AddVideo helperText={helperText} handleSubmit={addVideo} />
     <Grid container spacing={2}>
        {videos}
     </Grid>

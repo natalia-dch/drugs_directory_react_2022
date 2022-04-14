@@ -84,12 +84,12 @@ export default function ChangeRecs() {
 
 const elems = items.map((item)=>{
         return(
-          <>
           <ListItem
+          key={item.id}
           item={item}
           handleClick={() => handleClick(item)}
           deleteItem={() => deleteItem(item.id)}
-          canDeleteItem={!item.isAdmin} /></>
+          canDeleteItem={!item.isAdmin} />
         )
       })
 

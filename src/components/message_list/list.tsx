@@ -5,16 +5,16 @@ import "./message_list.css";
 
 
 function List(props) {
-const elems = props.items.map((item)=>{
+const elems = props.items.map((item, id)=>{
     return(
-      <>
       <ListItem
       item={item}
+      key={id}
       handleClick={() => {}}
       deleteItem={() => props.deleteItem(item.id)}
       processItem={() => props.processItem(item.id)}
       composeEmail={() => props.composeEmail(item)}
-      canDeleteItem={true} /></>
+      canDeleteItem={true} />
     )
   })
 return(<div className="wrapper">

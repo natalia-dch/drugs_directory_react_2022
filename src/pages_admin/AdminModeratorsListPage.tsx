@@ -76,12 +76,11 @@ return {"title": item.name + " ("+ item.email +") - " + (item.isAdmin? "адми
 
 const elems = items.map((item)=>{
         return(
-          <>
-          <ListItem
+          <ListItem key={item.id}
           item={createTitle(item)}
           handleClick={() => handleClick(item)}
           deleteItem={() => deleteItem(item.id)}
-          canDeleteItem={!item.isAdmin} /></>
+          canDeleteItem={!item.isAdmin} />
         )
       })
 

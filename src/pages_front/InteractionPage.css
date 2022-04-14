@@ -15,8 +15,25 @@ p .interactions{
   margin: 60px;
   margin-top: 60px;
   margin-left: 0px;
-  border-width: 3px;
-  border-color: var(--neurtal)
+}
+.resultHeader{
+  background-color: #07458d;
+  color: white;
+  padding: 10px;
+}
+.badResult{
+  background-color: #ed3541;
+}
+.goodResult{
+  background-color: #1DD3B0;
+}
+.neutralResult{
+  background-color: #07458d;
+}
+.drugChooserHeader{
+  background-color: #07458d;
+  color: white;
+  padding: 10px;
 }
 
 .trunkatedHeader{

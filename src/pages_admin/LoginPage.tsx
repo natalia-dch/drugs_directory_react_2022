@@ -3,31 +3,48 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
+import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [helperText, setHelperText] = React.useState("");
   const navigate = useNavigate();
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    if(email.length < 1){
+      setHelperText("Введите email")
+      return false;
+    }
+    if(password.length < 1){
+      setHelperText("Введите пароль")
+      return false;
+    }
+    if(!regex.test(email)){
+      setHelperText("Некорректное значение email")
+      return false;
+    }
+    return true;
   }
 
   function handleSubmit(event: any) {
-    navigate("/admin/moderators");
+    //TODO send feedback to doctor
+    if(validateForm())
+    { alert(email+password)
+      navigate("/admin/moderators");}
     // event.preventDefault();
   }
 
   return (
     <div className="Login">
-      <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Логин</Form.Label>
           <Form.Control
             autoFocus
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -40,12 +57,10 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
+        <FormHelperText>{helperText}</FormHelperText>
+        <Button variant="flat" size="lg" onClick={handleSubmit}>
           Войти
         </Button>
-      </Form>
     </div>
   );
 }
-
-export default Login;

@@ -23,7 +23,7 @@
     margin-right: 20px;
     width: 100px;
     cursor: pointer;
-    color: #2AA1C0;
+    color: #07458d;
   }
   .table2 a{
     text-align: right;
@@ -53,7 +53,7 @@ justify-content: end;
 }
 
 .table2 .nav-item a {
-color: #2AA1C0;
+color: #07458d;
 font-weight: bold;
 }
 .table{
@@ -69,7 +69,7 @@ font-weight: bold;
     color: #fff;
 }
 .table2 .navbar-light .navbar-nav .nav-link{
-    color: #2AA1C0;
+    color: #07458d;
 }
 .table2 h4{
   margin-left:30px;

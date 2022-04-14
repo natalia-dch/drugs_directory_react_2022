@@ -8,6 +8,7 @@ const myVideos = ["https://www.youtube.com/embed/T3rqrPchOTo","https://www.youtu
 "https://www.youtube.com/embed/wKraDSkt5IU", "https://www.youtube.com/embed/HIku1wIv9AM",
 "https://www.youtube.com/embed/L6ueL6sUo6Y","https://www.youtube.com/embed/GdybYT-vffg"]
 
+
 export default function Video (props) {
     const [videos, setVideos] = React.useState(myVideos);
     const isMedium = useMediaQuery('(max-width:850px)');
@@ -22,6 +23,7 @@ export default function Video (props) {
         </Grid>
       )
     })
+
     return(<div className="wrapperV">
     <Grid container spacing={2}>
        {videoCards}

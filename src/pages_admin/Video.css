@@ -42,3 +42,11 @@ width: 100%;
 padding: 10px;
 cursor: pointer;
 }
+.addVidForm{
+  padding:13px;
+  margin-top:10px;
+}
+input .addVidForm{
+
+  margin-top:10px;
+}

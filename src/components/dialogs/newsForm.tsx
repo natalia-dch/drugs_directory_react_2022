@@ -63,12 +63,12 @@ else{
         <ReactQuill theme="snow" value={text} onChange={setText}/>
       </Form.Group>
    <input type="file" id="input_file" onChange={onFileChange} accept=".jpg,.jpeg,.png" style={{ display: 'none' }} />
-     <Button id="get_file" onClick={() => document.getElementById('input_file').click() }>{picture ? "Изменить фото":"Добавить фото"}</Button>
+     <Button variant="flat" id="get_file" onClick={() => document.getElementById('input_file').click() }>{picture ? "Изменить фото":"Добавить фото"}</Button>
     { picture && <img src={picture} width="100%" alt="picture" /> }
   </DialogContent>
       <DialogActions>
-        <Button onClick={() => props.handleClose(null,false)}>Отмена</Button>
-        <Button form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
+        <Button variant="flat" onClick={() => props.handleClose(null,false)}>Отмена</Button>
+        <Button  variant="flat" form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
       </DialogActions>
     </Dialog>
   );

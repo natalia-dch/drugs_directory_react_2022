@@ -14,10 +14,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function VideoForm(props) {
 const [showFrame, setShowFrame] = React.useState(false);
 const [link, setLink] = React.useState("");
-
+console.log("form got"+props.item)
 
 const handleSubmit = () => {
-let newItem = link;
+let newItem = "https://www.youtube.com/embed/"+props.item;
 props.handleClose(newItem,true);
 }
 
@@ -27,15 +27,15 @@ props.handleClose(newItem,true);
       <DialogContent>
       <Grid className="videoContainer"
        item xs={4}>
-      <iframe width="100%" src={props.item}
+      <iframe width="100%" src={"https://www.youtube.com/embed/"+props.item}
       title="YouTube video player" frameBorder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen></iframe>
       </Grid>
 </DialogContent>
       <DialogActions>
-        <Button onClick={() => props.handleClose(null,false)}>Отмена</Button>
-        <Button form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
+        <Button variant="flat" onClick={() => props.handleClose(null,false)}>Отмена</Button>
+        <Button variant="flat" form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
       </DialogActions>
     </Dialog>
   );

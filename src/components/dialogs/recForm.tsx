@@ -54,8 +54,8 @@ else{
       </Form.Group>
   </DialogContent>
       <DialogActions>
-        <Button onClick={() => props.handleClose(null,false)}>Отмена</Button>
-        <Button form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
+        <Button variant="flat" onClick={() => props.handleClose(null,false)}>Отмена</Button>
+        <Button variant="flat" form='my-form' type="submit" onClick={handleSubmit}>Сохранить</Button>
       </DialogActions>
     </Dialog>
   );

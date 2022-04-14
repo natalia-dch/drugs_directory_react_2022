@@ -10,19 +10,37 @@ const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do e
 '\n'+
 'Neque viverra justo nec ultrices dui. Non arcu risus quis varius quam quisque id. Lobortis mattis aliquam faucibus purus. Ante in nibh mauris cursus mattis molestie a iaculis. Sit amet porttitor eget dolor morbi non. Egestas congue quisque egestas diam in arcu cursus euismod quis. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Nunc sed augue lacus viverra vitae. Imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Velit sed ullamcorper morbi tincidunt ornare massa eget egestas. Amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar.';
 
-const myInteraction = {
-  "id": 0,
-  "acting_substance": { "id": 0, "name": "изониазид"},
-  "kind_of_interaction": "Повышение риска ототоксичности, нефротоксичности, нервно-мышечной блокады.",
-  "clinical_consequence": "Совместное применение не рекомендуется",
-}
+const myInteractions = [
+  {
+    "id": 0,
+    "acting_substance": { "id": 0, "name": "изониазид"},
+    "kind_of_interaction": "Повышение риска ототоксичности, нефротоксичности, нервно-мышечной блокады.",
+    "clinical_consequence": "Совместное применение не рекомендуется",
+    "result":1
+  },
+  {
+    "id": 0,
+    "acting_substance": { "id": 0, "name": "изониазид"},
+    "kind_of_interaction": "Рифампицин вызывает индукцию изоферментов цитохрома P450, ускоряя их метаболизм",
+    "clinical_consequence": "Следует уделять повышенное внимание коррекции гипогликемической терапии",
+    "result":2
+  },
+  {
+    "id": 0,
+    "acting_substance": { "id": 0, "name": "изониазид"},
+    "kind_of_interaction": "",
+    "clinical_consequence": "",
+    "result":0
+  }
+]
 
 function Result(props) {
+    let res = Math.floor(Math.random() * 3); //TODO
     let isBadResult = true;
     let interaction = null;
     if(props.drug!=-1 && props.substance!=-1){
       //get interaction
-      interaction = myInteraction;
+      interaction = myInteractions[res];
       isBadResult = false;
     }
     if(isBadResult){
@@ -34,6 +52,7 @@ function Result(props) {
     }
     else{
     props.setResult(true);
+    props.setResultType(interaction.result)
     return(
       <div  className="wrapperI">
       <h5>Вид взаимодействия</h5>
@@ -51,12 +70,25 @@ export default function InteractionsPage (props) {
   const [drug, setDrug] = useState(-1)
   const [substance, setSubstance] = useState(-1)
   const [haveResult, setResult] = useState(false);
+  const [resultType, setResultType] = useState(0);
   const chooseDrug = (id) => {setDrug(id)};
   const chooseSubstance = (id) => {setSubstance(id)};
+  const getStyling = (resType) => {
+  switch (resType) {
+  case 0:
+    return "resultHeader neutralResult";
+  case 1:
+  return "resultHeader badResult";
+  case 2:
+  return "resultHeader goodResult";
+}
+  }
   const result = (
     <Grid item xs={isMedium? 12 : 4}>
-      <h3>Результат</h3>
-       <Result setResult = {setResult} className="intComp" drug={drug} substance={substance}/>
+      <h3
+      className={getStyling(resultType)}
+      >Результат<br/>&nbsp;</h3>
+       <Result setResult = {setResult} setResultType = {setResultType} className="intComp" drug={drug} substance={substance}/>
     </Grid>)
   const resultOnTop = isMedium && haveResult;
   return(
@@ -64,11 +96,11 @@ export default function InteractionsPage (props) {
     <Grid container spacing={isMedium? 0 : 2}>
     {resultOnTop && result}
     <Grid item xs={isMedium? 6 : 4}>
-       <h3 className="trunkatedHeader">Противотуберкулезные <br/> препараты</h3>
+       <h3 className="trunkatedHeader drugChooserHeader">Противотуберкулезные <br/> препараты</h3>
        <Drugs className="intComp" sItem={drug} handleClick={chooseDrug} isDrugPage={false}/>
     </Grid>
     <Grid item xs={isMedium? 6 : 4}>
-       <h3>Сопутствующие <br/> препараты</h3>
+       <h3 className="drugChooserHeader">Сопутствующие <br/> препараты</h3>
        <Drugs className="intComp" sItem={substance} handleClick={chooseSubstance} isDrugPage={false}/>
     </Grid>
     {!resultOnTop && result}
