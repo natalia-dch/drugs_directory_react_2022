@@ -6,14 +6,17 @@ import "./Login.css";
 import Grid from '@mui/material/Grid';
 import './Video.css';
 import VideoForm from '../components/dialogs/videoForm';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function VideoCard(props) {
   const [isShown, setIsShown] = useState(false);
+  const isMedium = useMediaQuery('(max-width:850px)');
+  const isMobile = useMediaQuery('(max-width:600px)');
   return (
     <Grid className="videoContainer" id={props.id}
      onMouseEnter={() => setIsShown(true)}
      onMouseLeave={() => setIsShown(false)}
-     item xs={4}>
+     item xs={isMobile? 12 : (isMedium ? 6 : 4)}>
      {isShown && (<p className="deleteBtnV" onClick={()=> props.delete(props.id)}>удалить видео?</p>)}
     <iframe width="100%" src={props.src}
     title="YouTube video player" frameBorder="0"
@@ -25,6 +28,8 @@ function VideoCard(props) {
 
 function AddVideo(props) {
 const [link, setLink] = useState("");
+const isMedium = useMediaQuery('(max-width:850px)');
+const isMobile = useMediaQuery('(max-width:600px)');
 
 const validateForm = () => {
     return link.length > 0;
@@ -71,6 +76,7 @@ const handleClose = (item,isSuccess) => {
 };
 
 const deleteVideo = (index) => {
+  setOpen(true);
   setLink(items[0]);
   console.log("deleting",index)
   const newList = [].concat(items) // Clone array with concat or slice(0)

@@ -3,3 +3,6 @@
   height: auto;
   max-height: 100vh;
 }
+html { height: 100%; }
+body { min-height: 110%; position: relative; padding-bottom: 3em; padding-top: 3em}
+.footer { height: 3em; position: absolute; bottom: 0; }

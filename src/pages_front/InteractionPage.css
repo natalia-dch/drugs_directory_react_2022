@@ -5,9 +5,22 @@ p .interactions{
     width: 30vw;
     overflow: visible;
 }
+.wrapperI{
+    --neutral: #07458d;
+    --bad: #ed3541;
+    --good: #f1b949;
+}
 
 .wrapperI{
   margin: 60px;
   margin-top: 60px;
   margin-left: 0px;
+  border-width: 3px;
+  border-color: var(--neurtal)
+}
+
+.trunkatedHeader{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

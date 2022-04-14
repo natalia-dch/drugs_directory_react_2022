@@ -36,10 +36,11 @@ function BriefCard(props) {
     return(
       <div key={props.item.id} className="bigCard">
       <div className="drugCard" onClick={() => {
+        console.log(props.item.id);
         props.handleClick(props.item.id);
         if(props.item.id!=-1){
           if(props.isDrugPage){
-            navigate(props.item.id);
+            navigate(`/drugs/${props.item.id}`);//props.item.id to={`/users/${user.id}`}
           }
     }
   }} >

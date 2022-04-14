@@ -1,9 +1,31 @@
-.wrapperV{
-  margin: 50px;
+
+
+@media only screen and (max-width: 599px) {
+  iframe {
+      width: 90vw;
+      height: 56.61vw; /* 100/56.25 = 560/315 = 1.778 */
+  }
+  .wrapperV{
+    margin: 5vw;
+  }
 }
-iframe {
-    width: 30vw;
-    height: 18.87vw; /* 100/56.25 = 560/315 = 1.778 */
+@media only screen and (min-width: 600px) {
+  iframe {
+      width: 45vw;
+      height: 28.305vw; /* 100/56.25 = 560/315 = 1.778 */
+  }
+  .wrapperV{
+    margin: 5vw;
+  }
+}
+@media only screen and (min-width: 850px) {
+  iframe {
+      width: 30vw;
+      height: 18.87vw; /* 100/56.25 = 560/315 = 1.778 */
+  }
+  .wrapperV{
+    margin: 5vw;
+  }
 }
 .videoContainer {
    position: relative;
@@ -12,10 +34,11 @@ iframe {
 
 .deleteBtnV{
 position: absolute;
+color: white;
 top: 30px;
-left: 20px;
+left: 18px;
 background-color: coral;
-width: 96%;
+width: 100%;
 padding: 10px;
 cursor: pointer;
 }

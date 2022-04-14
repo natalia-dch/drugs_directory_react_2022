@@ -1,9 +1,10 @@
 // @ts-nocheck
-import React, {Component} from 'react';
+import React, {Component, useState } from 'react';
 import Interactions from '../contracts'
 import Drugs from './DrugsPage';
 import Grid from '@mui/material/Grid';
 import './InteractionPage.css';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque id nibh tortor id aliquet lectus proin nibh. Vivamus arcu felis bibendum ut tristique. Non odio euismod lacinia at quis risus sed. Ultrices tincidunt arcu non sodales neque sodales. Consequat id porta nibh venenatis cras sed. Porttitor leo a diam sollicitudin tempor id eu. Ultrices gravida dictum fusce ut placerat orci nulla. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Fusce ut placerat orci nulla pellentesque dignissim enim. Pretium nibh ipsum consequat nisl vel pretium. Tincidunt tortor aliquam nulla facilisi cras fermentum. Id faucibus nisl tincidunt eget nullam non nisi est.\n'+
 '\n'+
@@ -12,8 +13,8 @@ const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do e
 const myInteraction = {
   "id": 0,
   "acting_substance": { "id": 0, "name": "изониазид"},
-  "kind_of_interaction": lorem,
-  "clinical_consequence": lorem,
+  "kind_of_interaction": "Повышение риска ототоксичности, нефротоксичности, нервно-мышечной блокады.",
+  "clinical_consequence": "Совместное применение не рекомендуется",
 }
 
 function Result(props) {
@@ -32,6 +33,7 @@ function Result(props) {
       )
     }
     else{
+    props.setResult(true);
     return(
       <div  className="wrapperI">
       <h5>Вид взаимодействия</h5>
@@ -43,51 +45,33 @@ function Result(props) {
   }
 }
 
-class InteractionsPage extends Component {
-  constructor(props) {
-  super(props);
-  this.state = {
-      drug: -1,
-      substance: -1,
-    }
-    this.chooseDrug = this.chooseDrug.bind(this);
-    this.chooseSubstance = this.chooseSubstance.bind(this);
-  }
-  chooseDrug(id) {
-        // if(id!=-1)
-        // {
-          this.setState({
-          drug: id,
-        });
-      // }
-      }
-  chooseSubstance(id) {
-            // if(id!=-1)
-            // {
-              this.setState({
-              substance: id,
-            });
-          }
-          // }
-  render(){
-    return(
-    <div className="wrapper">
-    <Grid container spacing={2}>
-    <Grid item xs={4}>
-       <h3>Противотуберкулезные <br/> препараты</h3>
-       <Drugs className="intComp" sItem={this.state.drug} handleClick={this.chooseDrug} isDrugPage={false}/>
-    </Grid>
-    <Grid item xs={4}>
-       <h3>Сопутствующие <br/> препараты</h3>
-       <Drugs className="intComp" sItem={this.state.substance} handleClick={this.chooseSubstance} isDrugPage={false}/>
-    </Grid>
-    <Grid item xs={4}>
+export default function InteractionsPage (props) {
+  const isMedium = useMediaQuery('(max-width:850px)');
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const [drug, setDrug] = useState(-1)
+  const [substance, setSubstance] = useState(-1)
+  const [haveResult, setResult] = useState(false);
+  const chooseDrug = (id) => {setDrug(id)};
+  const chooseSubstance = (id) => {setSubstance(id)};
+  const result = (
+    <Grid item xs={isMedium? 12 : 4}>
       <h3>Результат</h3>
-       <Result className="intComp" drug={this.state.drug} substance={this.state.substance}/>
+       <Result setResult = {setResult} className="intComp" drug={drug} substance={substance}/>
+    </Grid>)
+  const resultOnTop = isMedium && haveResult;
+  return(
+    <div className="wrapper">
+    <Grid container spacing={isMedium? 0 : 2}>
+    {resultOnTop && result}
+    <Grid item xs={isMedium? 6 : 4}>
+       <h3 className="trunkatedHeader">Противотуберкулезные <br/> препараты</h3>
+       <Drugs className="intComp" sItem={drug} handleClick={chooseDrug} isDrugPage={false}/>
     </Grid>
+    <Grid item xs={isMedium? 6 : 4}>
+       <h3>Сопутствующие <br/> препараты</h3>
+       <Drugs className="intComp" sItem={substance} handleClick={chooseSubstance} isDrugPage={false}/>
+    </Grid>
+    {!resultOnTop && result}
     </Grid>
       </div>)
   }
-}
-
-export default InteractionsPage;

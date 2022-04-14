@@ -10,7 +10,7 @@ const elems = props.items.map((item)=>{
       <>
       <ListItem
       item={item}
-      handleClick={() => props.handleClick(item)}
+      handleClick={() => {}}
       deleteItem={() => props.deleteItem(item.id)}
       processItem={() => props.processItem(item.id)}
       composeEmail={() => props.composeEmail(item)}

@@ -23,7 +23,7 @@ props.handleClose(newItem,true);
 
   return (
     <Dialog open={props.isOpen} onClose={() => props.handleClose(null,false)}>
-      <DialogTitle>"Добавить это видео?"</DialogTitle>
+      <DialogTitle>Добавить это видео?</DialogTitle>
       <DialogContent>
       <Grid className="videoContainer"
        item xs={4}>

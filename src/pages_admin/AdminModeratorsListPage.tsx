@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, {Component, useState } from 'react';
+import React, {Component, useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 // import './DrugsPage.css';
 import Button from '@mui/material/Button';
@@ -21,6 +21,7 @@ export default function AdminList() {
   const [items, setItems] = React.useState(myUsers);
   const [open, setOpen] = React.useState(false);
   const [sItem, setsItem] = React.useState(blankUser);
+
 
  const handleClick = (item, isCreateMode) => {
    console.log("id"+item.name+"was clicked");

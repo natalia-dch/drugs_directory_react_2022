@@ -2,19 +2,15 @@
 import React, {Component, useState } from 'react';
 import Grid from '@mui/material/Grid';
 // import './DrugsPage.css';
-
+import Button from '@mui/material/Button';
+import { InputAdornment, Input, Card, TextField } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import Brief from '../contracts'
-import List from '../components/basic_list/list';
+import ListItem from '../components/basic_list/list_item';
+import AddBtn from '../components/basic_list/add_btn';
+import UserForm from '../components/dialogs/userForm';
 import SearchForm from '../components/search/search_form';
-
-
-interface IProps {
-}
-
-interface IState {
-  drugs?: Brief[]; //id, name
-}
+import List from '../components/message_list/list';
 
 const myDrugs = [
 { "id": 0, "name": "изониазид"},
@@ -31,126 +27,42 @@ const myDrugs = [
       { "id": 11, "name": "этамбутол"}
 ];
 
-function AddCard(props) {
-    const navigate = useNavigate();
-    return(
-      <div key={props.item.id} className="bigCard">
-      <div className="drugCard" onClick={() => {
-        props.handleClick(props.item.id);
-        if(props.item.id!=-1){
-          if(props.isDrugPage){
-            navigate('admin/drugs/' + props.item.id);
-          }
-    }
-  }} >
-      <p className={props.isBold?"boldName notOverFl":"notOverFl"}>{props.item.name}</p>
-      </div>
-      <hr/>
-      </div>
-    )
-}
+export default function ProcessFeedback() {
+const [items, setItems] = React.useState(myDrugs);
+const [fItems, setFItems] = React.useState(myDrugs);
+const [filterVal, setFilter] = React.useState("");
 
-function BriefCard(props) {
-    const navigate = useNavigate();
-    return(
-      <div key={props.item.id} className="bigCard">
-      <div className="drugCard" onClick={() => {
-        props.handleClick(props.item.id);
-        if(props.item.id!=-1){
-          if(props.isDrugPage){
-            navigate("/drug");
-          }
-    }
-  }} >
-      <p className={props.isBold?"boldName notOverFl":"notOverFl"}>{props.item.name}</p>
-      </div>
-      <hr/>
-      </div>
-    )
-}
+useEffect(() => {
+  filterMessages()
+},[items]);
 
-class AdminDrugList extends Component<IProps, IState> {
-  constructor(props : IProps) {
-  super(props);
-    this.state = {
-      items: myDrugs,
-      input: "",
-    }
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleDrugClick = this.handleDrugClick.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.addNew = this.addNew.bind(this);
-  }
-
-componentDidMount() {
-  this.handleSearch("");
-  }
-
-handleDrugClick(id) {
-console.log("id"+id+"was clicked");
-if(id==-1){
-this.setState({
-    input : "",
-  })
-this.handleSearch("");
-}
-else{
-  this.props.handleClick(id);
-}
-}
-addNew() {
-console.log("new was clicked");
+const deleteItem = (id) => {
+  console.log("id"+id+"was deleted");
+  const newList = items.filter(item => item.id !== id);
+setItems(newList);
   // this.props.handleClick(id); //TODO
-}
-deleteItem(id) {
-console.log("id"+item.name+"was deleted");
-  // this.props.handleClick(id); //TODO
+  // filterMessages();
 }
 
-handleSearch(value) {
-       // let value = this.state.input;
-       console.log(value)
-       let result = []
-       if(value=="")
-       //TODO ask for all drugs
-        {
-          this.props.handleClick(-1); //remove bold ???
-          console.log("asking for all drugs")
-          result=myDrugs
-        }
-      else
-      //TODO ask for specific ones
-      {
-        console.log("asking for specific drugs")
-        result = []
-      }
-       //get result
-       if(result.length==0){
-      this.props.handleClick(-1); //remove bold ???
-      console.log("got nothing");
-       this.setState({
-         drugs: [{ "id": -1, "name": "ничего не найдено.\n сбросить фильтрацию?"}],
-       })
-     }
-       else{
-      console.log("got"+result)
-      //change state
-      this.setState({
-        drugs: result,
-      });}
-    }
+const changeFilter = (value) =>{
+  console.log("not yet changed",filterVal)
+  setFilter(val);
+  console.log("changed",filterVal)
+  filterMessages();
+}
 
-render(){
+const filterMessages = () => {
+console.log(items);
+let filtered = items.filter(item=> item.name
+  (!item.isMedic == filterVal[0] || item.isMedic == filterVal[1]) &&
+  (!item.isProcessed == filterVal[2] || item.isProcessed == filterVal[3])
+)
+setFItems(filtered)
+}
+
 return(
-<div className={this.props.isDrugPage?"wrapper":"wrapperSL"}>
-<SearchForm
-input={this.state.input}
-handleChange={(value) =>  this.setState({  input : value,  })}
-handleSearch={this.handleSearch}
-/>
-<List items={this.state.items} handleClick={this.handleClick} addNew={this.addNew} name="лекарство" deleteItem={this.deleteItem}/>
-</div>)
-  }
+      <>
+      <SearchForm filter={filterVal} changeFilter={changeFilter}/>
+      <List items={fItems} name="пользователя" deleteItem={deleteItem} processItem={processItem} composeEmail={composeEmail}/>
+      </>)
 }
-
-export default AdminDrugList;

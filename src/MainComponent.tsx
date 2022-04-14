@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import Header from './components/header/HeaderComponent';
+import Header from './components/mainHeader/HeaderComponent';
 import Footer from './components/footer/FooterComponent';
 import AdminMenu from './components/admin_header/AdminMenu';
 
@@ -24,9 +24,7 @@ import ProcessFeedback from './pages_admin/ProcessFeedbackPage';
 import AdminDrugList from './pages_admin/AdminDrugListPage';
 import AdminModeratorsList from './pages_admin/AdminModeratorsListPage';
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
@@ -55,10 +53,10 @@ changeItem(id) {
       <Router>
         <Routes>
           <Route path="/" element={<div><Header /><Home /><Footer/></div>} />
-          <Route path="/about" element={<div><Header /><Home /><Footer/></div>} />
-          <Route path="/contacts" element={<div><Header /><Contact /><Footer/></div>} />
-          <Route path="/drugs" element={<div><Header /><Drugs handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/><Footer/></div>} />
-          <Route path="/drug" element={<div><Header /><DrugPage id={this.state.drugToShow}/><Footer/></div>} />
+          <Route path="/about" element={<div><Header /><About /><Footer/></div>} />
+          <Route path="/contacts" element={<div><Header /><Contact/><Footer/></div>} />
+          <Route exact path="/drugs" element={<div><Header /><Drugs handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/><Footer/></div>} />
+          <Route path="/drugs/:drugID" element={<div><Header /><DrugPage id={this.state.drugToShow}/><Footer/></div>} />
           <Route path="/interactions" element={<div><Header /><InteractionsPage /><Footer/></div>} />
           <Route path="/news" element={<div><Header /><News /><Footer/></div>} />
           <Route path="/recomendations" element={<div><Header /><Recomendations /><Footer/></div>} />
@@ -66,11 +64,12 @@ changeItem(id) {
           <Route path="/admin" element={<Login />} />
           <Route path="/admin/moderators" element={<div><AdminMenu/><AdminModeratorsList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
           <Route path="/admin/drugs" element={<div><AdminMenu/><AdminDrugList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
-          <Route path="admin/:userId" element={<FormDrug />} />
+          <Route path="admin/drugs/:userId" element={<FormDrug />} />
           <Route path="/admin/news" element={<div><AdminMenu/><ChangeNews/></div>} />
           <Route path="/admin/video" element={<div><AdminMenu/><ChangeVideos/></div>} />
           <Route path="/admin/recs" element={<div><AdminMenu/><ChangeRecs/></div>} />
           <Route path="/admin/feedback" element={<div><AdminMenu/><ProcessFeedback/></div>} />
+          <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
       </Router>
     )

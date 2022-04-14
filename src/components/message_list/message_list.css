@@ -2,30 +2,50 @@
    position: relative;
 }
 
+.btnToClick1{
+  cursor: pointer;
+}
+.hamburgerMessage{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.messageCard{
+  padding-bottom: 10px;
+}
+header{
+    --firstNavColor: #07458d;
+    --secNavColor: #ed3541;
+    --thirdNavColor: #435599;
+    --fourthNavColor: #b9c9d9;
+    --fiveNavColor: #f1b949;
+    --sixNavColor: #07458d;
+    --sevenNavColor: #b1dff5;
+}
 
-.deleteCard{
+.deleteCard1{
 position: absolute;
 top: 0px;
 right: 0px;
-background-color: coral;
+background-color: #ed3541;
 width: 20%;
 padding: 8px;
 color: white;
 }
 .processCard{
 position: absolute;
-top: 30px;
+top: 40px;
 right: 0px;
-background-color: red;
+background-color: #07458d;
 width: 20%;
 padding: 8px;
 color: white;
 }
 .respondCard{
 position: absolute;
-top: 60px;
+top: 80px;
 right: 0px;
-background-color: blue;
+background-color: #f1b949;
 width: 20%;
 padding: 8px;
 color: white;

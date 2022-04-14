@@ -1,21 +1,15 @@
 // @ts-nocheck
 import React, {Component, useState } from 'react';
 import Grid from '@mui/material/Grid';
-// import './DrugsPage.css';
 import Button from '@mui/material/Button';
 import { InputAdornment, Input, Card, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import Brief from '../contracts'
 import List from '../components/basic_list/list';
-
-
-interface IProps {
-}
-
-interface IState {
-  drugs?: Brief[]; //id, name
-}
+import ListItem from '../components/basic_list/list_item';
+import AddBtn from '../components/basic_list/add_btn';
+import RecForm from '../components/dialogs/recForm';
 
 let lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque id nibh tortor id aliquet lectus proin nibh. Vivamus arcu felis bibendum ut tristique. Non odio euismod lacinia at quis risus sed. Ultrices tincidunt arcu non sodales neque sodales. Consequat id porta nibh venenatis cras sed. Porttitor leo a diam sollicitudin tempor id eu. Ultrices gravida dictum fusce ut placerat orci nulla. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Fusce ut placerat orci nulla pellentesque dignissim enim. Pretium nibh ipsum consequat nisl vel pretium. Tincidunt tortor aliquam nulla facilisi cras fermentum. Id faucibus nisl tincidunt eget nullam non nisi est.\n'+
 '\n'+
@@ -26,39 +20,82 @@ const myRecs =
 { "id": 0, "title": "COVID", "text": lorem },
 { "id": 1, "title": "ВИЧ", "text": lorem },
 { "id": 2, "title": "Сахарный диабет 2 типа",  "text": lorem },
-{ "id": 0, "title": "Артериальная гипертония", "text": lorem },
-{ "id": 1, "title": "Вирусные гепатиты (B,C)", "text": lorem },
+{ "id": 3, "title": "Артериальная гипертония", "text": lorem },
+{ "id": 4, "title": "Вирусные гепатиты (B,C)", "text": lorem },
 ];
 
+export default function ChangeRecs() {
+  const blankItem = { "id": -2, "title": "", "text": "" };
+  const [items, setItems] = React.useState(myRecs);
+  const [open, setOpen] = React.useState(false);
+  const [sItem, setsItem] = React.useState(blankItem);
 
-class ChangeRecs extends Component<IProps, IState> {
-  constructor(props : IProps) {
-  super(props);
-    this.state = {
-      items: myRecs,
-      sItem: -1,
+ const handleClick = (item, isCreateMode) => {
+   console.log("id"+item.name+"was clicked");
+    setsItem(item);
+    setOpen(true);
+  };
+
+  const addNew = () => {
+  setOpen(true);
+  console.log("new was clicked");
+    // this.props.handleClick(id); //TODO
+  }
+
+  const changeItem = (newItem) => {
+  const newList = items.map((item) => {
+  if (item.id === newItem.id) return newItem
+  return item;
+})
+  setItems(newList);
+  console.log("item"+newItem+"was changed")
+  };
+
+  const addItem = (item) => {
+    setItems([...items,item])
+    console.log("item"+item+"was added");
+  };
+
+  const deleteItem = (id) => {
+  setItems(items.filter(item => item.id !== id));
+  console.log("id"+index+"was deleted");
+    // this.props.handleClick(id); //TODO
+  }
+
+  const handleClose = (item,isSuccess) => {
+    setOpen(false);
+    console.log("closing");
+    setsItem(blankItem);
+    console.log(item)
+    if(isSuccess){
+      if(sItem.id == -2){
+    addItem(item)
+      }
+      else{
+    changeItem(item)
+      }
     }
-    this.handleClick = this.handleClick.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.addNew = this.addNew.bind(this);
-  }
 
-handleClick(item) {
-console.log("id"+item.name+"was clicked");
-  // this.props.handleClick(id); //TODO
-}
-addNew() {
-console.log("new was clicked");
-  // this.props.handleClick(id); //TODO
-}
-deleteItem(id) {
-console.log("id"+item.name+"was deleted");
-  // this.props.handleClick(id); //TODO
-}
+};
 
-  render(){
-    return(<List items={this.state.items} handleClick={this.handleClick} addNew={this.addNew} name="рекомендацию" deleteItem={this.deleteItem}/>)
-  }
-}
+// const createTitle = (item) => {
+// return {"title": item.name + " ("+ item.email +") - " + (item.isAdmin? "админ" : "модератор")};
+// }
 
-export default ChangeRecs;
+const elems = items.map((item)=>{
+        return(
+          <>
+          <ListItem
+          item={item}
+          handleClick={() => handleClick(item)}
+          deleteItem={() => deleteItem(item.id)}
+          canDeleteItem={!item.isAdmin} /></>
+        )
+      })
+
+return(<div className="wrapper">
+        <RecForm isOpen={open} item={sItem} handleClose={handleClose}/>
+        <AddBtn value={"добавить рекомендацию" } handleClick={addNew}/>
+         {elems}
+        </div>)
+      }
