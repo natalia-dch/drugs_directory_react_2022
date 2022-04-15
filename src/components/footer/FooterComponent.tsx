@@ -22,13 +22,11 @@ class Footer extends Component {
   }
   render(){
 
-    return(       <AppBar position="static" style={{color: "white", backgroundColor: "#07458d", fontSize: "16px", position: "fixed", bottom: 0}}  >
-          <Container maxWidth="md">
-            <Toolbar>
+    return(
+      <div className="footer">
                 <div className="par">{text}</div>
-            </Toolbar>
-          </Container>
-        </AppBar>)
+      </div>
+      )
   }
 }
 

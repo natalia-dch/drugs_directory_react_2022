@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import logo from '../../shared/logo.png'
-import Media from 'react-media';
 import { Menu } from '@mui/icons-material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -58,8 +57,8 @@ function HeaderItemDD(props) {
 
 function HeaderItem(props) {
   return (
-    <li className="nav-item" onClick={props.onClick}>
-    <Link to={props.link} className="nav-link">
+    <li className="nav-item">
+    <Link to={props.link} onClick={props.onClick} className="nav-link">
       {props.name}
     </Link>
     </li>
@@ -73,19 +72,20 @@ function Header() {
     setMenu(!menuOpen)
   }
   return (
-    <div className="table2">
-    <h4>Админ-панель</h4>
+    <div className="table">
     {(menuOpen || isBig ) &&
       <ul className="list" id="nav">
-        <HeaderItem onClick={toggleMenu} link="/admin/moderators" name="модераторы"/>
-        <HeaderItem onClick={toggleMenu} link="/admin/drugs" name="лекарства"/>
-        <HeaderItem onClick={toggleMenu} link="/admin/recs" name='клинические рекомендации'/>
-        <HeaderItem onClick={toggleMenu} link="/admin/news" name='новости'/>
-        <HeaderItem onClick={toggleMenu} link="/admin/video" name='видео'/>
-        <HeaderItem onClick={toggleMenu} link="/admin/feedback" name="сообщения пользователей"/>
+        <HeaderItem onClick={toggleMenu} link="/about" name="Цель сайта"/>
+        <HeaderItem onClick={toggleMenu} link="/drugs" name="Препараты"/>
+        <HeaderItem onClick={toggleMenu} link="/interactions" name="Лекарственное взаимодействие"/>
+        <HeaderItem onClick={toggleMenu} link="/recomendations" name="Клинические рекомендации"/>
+        <HeaderItem onClick={toggleMenu} link="/news" name="Новости сайта"/>
+        <HeaderItem onClick={toggleMenu} link="/video" name="Видео"/>
+        <HeaderItem onClick={toggleMenu} link="/contacts" name="Обратная связь"/>
       </ul>
     }
-<Menu className="hamburger" fontSize="large" onClick={toggleMenu}/>
+    {(!menuOpen && !isBig ) &&
+<Menu className="hamburger" fontSize="large" onClick={toggleMenu}/>}
     </div>
 
 

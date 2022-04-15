@@ -6,17 +6,6 @@
   margin-top: 20px;
 
 }
-@media only screen and (max-width: 599px) {
-  .wrapperSL{
-    margin-right: 10px;
-    margin-top: 20px;
-
-  }
-}
-DrugPage p{
-  font-size: 10px;
-}
-
 .drugCard{
     margin: 10px;
 }

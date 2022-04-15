@@ -1,0 +1,23 @@
+.relativeCard {
+   position: relative;
+}
+.btnToClick{
+  cursor: pointer;
+}
+.messageCard {
+  padding-bottom: 100px;
+}
+.itemCard{
+  margin-bottom: 10px;
+}
+
+.deleteCard{
+position: absolute;
+top: 0px;
+right: 0px;
+height: 100%;
+background-color: coral;
+width: 20%;
+padding: 8px;
+color: white;
+}
