@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, {Component, useState } from 'react';
+import React, {Component, useState,useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 // import './DrugsPage.css';
 import Button from '@mui/material/Button';
@@ -10,7 +10,7 @@ import ListItem from '../components/basic_list/list_item';
 import AddBtn from '../components/basic_list/add_btn';
 import UserForm from '../components/dialogs/userForm';
 import SearchForm from '../components/search/search_form';
-import List from '../components/message_list/list';
+import List from '../components/basic_list/list';
 
 const myDrugs = [
 { "id": 0, "name": "изониазид"},
@@ -27,14 +27,17 @@ const myDrugs = [
       { "id": 11, "name": "этамбутол"}
 ];
 
-export default function ProcessFeedback() {
+export default function AdminDrugList() {
 const [items, setItems] = React.useState(myDrugs);
 const [fItems, setFItems] = React.useState(myDrugs);
 const [filterVal, setFilter] = React.useState("");
 
+
 useEffect(() => {
   filterMessages()
 },[items]);
+
+const navigate = useNavigate();
 
 const deleteItem = (id) => {
   console.log("id"+id+"was deleted");
@@ -43,6 +46,13 @@ setItems(newList);
   // this.props.handleClick(id); //TODO
   // filterMessages();
 }
+const addNew = () => {
+   navigate(`/admin/drugs/-1`);
+}
+const handleClick = (item) => {
+  console.log("id"+item.name+"was clicked");
+   navigate(`/admin/drugs/${item.id}`);
+ };
 
 const changeFilter = (value) =>{
   console.log("not yet changed",filterVal)
@@ -53,16 +63,13 @@ const changeFilter = (value) =>{
 
 const filterMessages = () => {
 console.log(items);
-let filtered = items.filter(item=> item.name
-  (!item.isMedic == filterVal[0] || item.isMedic == filterVal[1]) &&
-  (!item.isProcessed == filterVal[2] || item.isProcessed == filterVal[3])
-)
+let filtered = items.filter(item=> item.name.indexOf(filterVal) !== -1);
 setFItems(filtered)
 }
 
 return(
       <>
       <SearchForm filter={filterVal} changeFilter={changeFilter}/>
-      <List items={fItems} name="пользователя" deleteItem={deleteItem} processItem={processItem} composeEmail={composeEmail}/>
+      <List items={fItems} name="препарат" addNew={addNew} deleteItem={deleteItem} handleClick={handleClick}/>
       </>)
 }

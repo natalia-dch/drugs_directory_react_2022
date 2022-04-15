@@ -33,7 +33,7 @@ export default function Login() {
   function handleSubmit(event: any) {
     //TODO send feedback to doctor
     if(validateForm())
-    { alert(email+password)
+    { 
       navigate("/admin/moderators");}
     // event.preventDefault();
   }

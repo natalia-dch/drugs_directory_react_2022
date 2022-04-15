@@ -64,7 +64,7 @@ changeItem(id) {
           <Route path="/admin" element={<Login />} />
           <Route path="/admin/moderators" element={<div><AdminMenu/><AdminModeratorsList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
           <Route path="/admin/drugs" element={<div><AdminMenu/><AdminDrugList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
-          <Route path="admin/drugs/:userId" element={<FormDrug />} />
+          <Route path="admin/drugs/:drugId" element={<div><AdminMenu/><FormDrug /></div>} />
           <Route path="/admin/news" element={<div><AdminMenu/><ChangeNews/></div>} />
           <Route path="/admin/video" element={<div><AdminMenu/><ChangeVideos/></div>} />
           <Route path="/admin/recs" element={<div><AdminMenu/><ChangeRecs/></div>} />

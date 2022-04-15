@@ -13,6 +13,9 @@
 
   }
 }
+DrugPage p{
+  font-size: 10px;
+}
 
 .drugCard{
     margin: 10px;

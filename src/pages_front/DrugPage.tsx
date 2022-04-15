@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import Drug from '../contracts'
 import './DrugPage.css';
+import Table from '../components/table/table';
 
 let lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque id nibh tortor id aliquet lectus proin nibh. Vivamus arcu felis bibendum ut tristique. Non odio euismod lacinia at quis risus sed. Ultrices tincidunt arcu non sodales neque sodales. Consequat id porta nibh venenatis cras sed. Porttitor leo a diam sollicitudin tempor id eu. Ultrices gravida dictum fusce ut placerat orci nulla. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Fusce ut placerat orci nulla pellentesque dignissim enim. Pretium nibh ipsum consequat nisl vel pretium. Tincidunt tortor aliquam nulla facilisi cras fermentum. Id faucibus nisl tincidunt eget nullam non nisi est.\n'+
 '\n'+
@@ -106,45 +107,51 @@ system: {  "id": 0, "system": "Со стороны ЦНС"}
 }],
   "foodInfo": {
   "recommendations": "string",
-    "comment": lorem }
+    "comment": lorem },
+  "interactions": [
+    {"id":0,"acting_substance":"Пенициллины, цефалоспорины",
+  "kind_of_interaction":"Синергизм при раздельном введении",
+  "clinical_consequence":"",
+  "result":0},
+{"id":1,"acting_substance":"Аминогликозиды, при одновременном или последовательном применении двух препаратов и более",
+"kind_of_interaction":"Повышение риска ототоксичности, нефротоксичности, нервно-мышечной блокады.",
+"clinical_consequence":"Совместное применение не рекомендуется",
+"result":1},
+]
 }
 
 export default function DrugPage () {
   //get Drug
   const { drugId } = useParams();
   const [drug, setDrug] = useState(myDrug);
-  let tradenames = drug.trade_names.map((tn)=>{
-    return(tn.trade_name+" : "+tn.pharm_form+",\n");
-  });
-  let pharm_kinetics = drug.pharm_kinetics.map((e)=>{
-    return(e.name+" : "+e.value+",\n");
-  });
-  let side_effects = drug.side_effects.map((s)=>{
-    return(s.system.system+" : "+s.effects.map((e)=>e.effect)+", \n");
-  });
-
+  let tradenames = drug.trade_names.map((tn)=>[tn.trade_name,tn.pharm_form])
+  let pharm_kinetics = drug.pharm_kinetics.map((e)=>[e.name,e.value]);
+  let side_effects = drug.side_effects.map((s)=>[s.system.system,s.effects.map((e)=>e.effect+", ")]);
   let dosages = drug.dosages.map((s)=>{
-    let isAdult = s.adult?"для взрослых":"для детей";
-    return(s.pharm_form+"("+isAdult+"):"+"\nдневная доза: "+s.daily_dose+",\nмаксимальная доза: "+s.max_daily_dose+",\n\n");
+  let isAdult = s.adult?"взрослый":"ребенок";
+    return([s.pharm_form,isAdult,s.daily_dose,s.max_daily_dose]);
   });
-  alert(drugId);
+  let interactions = drug.interactions.map((i)=>[i.acting_substance,i.kind_of_interaction,i.clinical_consequence])
   return(<div className="DrugWrapper wrapper">
   <h2>{drug.inp_name}</h2>
   <p className="drugH">{drug.first_line?"препарат первого ряда":"препарат второго ряда"}</p>
   <h5 className="drugH">Торговые наименования и форма выпуска:</h5>
-  <p className="drugH">{tradenames}</p>
+  <Table title={["торговые наименования","форма выпуска"]} data={tradenames} />
   <h5 className="drugH">Фармакодинамика:</h5>
   <p className="drugH">{drug.pharm_dynamics}</p>
   <h5 className="drugH">Фармакокинетика:</h5>
-  <p className="drugH">{pharm_kinetics}</p>
+  <Table data={pharm_kinetics} />
   <h5 className="drugH">Побочные эффекты:</h5>
-  <p className="drugH">{side_effects}</p>
+    <Table title={["система","эффект"]} data={side_effects} />
   <h5 className="drugH">Противопоказания:</h5>
   <p className="drugH">{drug.contraindications}</p>
   <h5 className="drugH">Место в лечении туберкулеза:</h5>
   <p className="drugH">{drug.role_in_treatment}</p>
   <h5 className="drugH">Дозы:</h5>
-  <p className="drugH">{dosages}</p>
+  <Table title={["лекарственная форма","тип пациента","сут. доза","макс. сут. доза"]} data={dosages} />
+  <h5 className="drugH">Лекарственные взаимодействия:</h5>
+  <Table title={["действующее вещество","вид взаимодействия","клиническое последствие"]} data={interactions} />
+
     </div>)
   }
 
