@@ -4,32 +4,51 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, FormLabel } from "r
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
+import FormHelperText from '@mui/material/FormHelperText';
+import './Contact.css';
 
 function Contact() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [isDoctor, setIsDoctor] = useState("");
+  const [isDoctor, setIsDoctor] = useState(false);
   const [message, setMessage] = useState("");
-
-
+  const [helperText, setHelperText] = React.useState("");
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   function validateForm() {
-    return email.length > 0 && name.length > 0;
+    if(email.length < 1){
+      setHelperText("Введите email")
+      return false;
+    }
+    if(name.length < 1){
+      setHelperText("Введите имя")
+      return false;
+    }
+    if(message.length < 1){
+      setHelperText("Введите сообщение")
+      return false;
+    }
+    if(!regex.test(email)){
+      setHelperText("Некорректное значение email")
+      return false;
+    }
+    return true;
   }
 
   function handleSubmit(event: any) {
     //TODO send feedback to doctor
-    alert("! Ответ придёт на указанную почту в течении 7 рабочих дней.")
+    if(validateForm())
+    {
+      alert("! Ответ придёт на указанную почту в течении 7 рабочих дней.")}
     // event.preventDefault();
   }
 
   return (
     <div className="Login">
-      <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
             autoFocus
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -42,21 +61,15 @@ function Contact() {
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
-        <Form.Group size="lg" controlId="radio">
-          <Form.Label>Являетесь ли Вы врачом или пациентом?</Form.Label>
-          <Form.Check
-            type="radio"
-            name="group1"
-            label={`врач`}
-            id={`disabled-default-radio`}
-          />
-          <Form.Check
-            type="radio"
-            name="group1"
-            label={`пациент`}
-            id={`disabled-default-radio`}
-          />
-        </Form.Group>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue={0}
+          name="radio-buttons-group"
+          onChange={(event) => {setIsDoctor(event.target.value)}}
+        >
+          <FormControlLabel value={1} control={<Radio />} label="врач" />
+          <FormControlLabel value={0} control={<Radio />} label="пациент" />
+        </RadioGroup>
         <Form.Group size="lg" controlId="name">
           <Form.Label>Сообщение</Form.Label>
           <Form.Control
@@ -66,11 +79,10 @@ function Contact() {
             as="textarea" rows={3}
           />
         </Form.Group>
-
-<Button type="submit" block disabled={!validateForm()}>
+<FormHelperText>{helperText}</FormHelperText>
+<Button variant="flat" onClick={handleSubmit}>
   Задать вопрос
 </Button>
-      </Form>
     </div>
   );
 }

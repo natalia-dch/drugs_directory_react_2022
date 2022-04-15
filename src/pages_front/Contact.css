@@ -7,9 +7,24 @@
     margin: 0 auto;
     max-width: 320px;
   }
-  .btn-primary {
-    margin: 0 auto;
-    max-width: 320px;
-    padding-top: 100px;
-  }
+}
+.btn-primary {
+  margin: 0 auto;
+  max-width: 320px;
+  padding-top: 100px;
+  width: 100%;
+
+}
+.btn-flat {
+  background-color: #07458d;
+  color: white;
+  width: 100%;
+    margin-top: 10px;
+}
+.btn-flat[disabled] {
+  background-color: #07458d;
+  margin-top: 10px;
+  color: white;
+  width: 100%;
+  opacity: 1;
 }

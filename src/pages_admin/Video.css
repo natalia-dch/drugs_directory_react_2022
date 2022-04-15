@@ -27,3 +27,26 @@
     margin: 5vw;
   }
 }
+.videoContainer {
+   position: relative;
+}
+
+
+.deleteBtnV{
+position: absolute;
+color: white;
+top: 30px;
+left: 18px;
+background-color: coral;
+width: 100%;
+padding: 10px;
+cursor: pointer;
+}
+.addVidForm{
+  padding:13px;
+  margin-top:10px;
+}
+input .addVidForm{
+
+  margin-top:10px;
+}

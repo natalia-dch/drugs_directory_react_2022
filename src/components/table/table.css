@@ -1,0 +1,74 @@
+@media only screen and (min-width: 850px) {
+  table {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 849px) {
+  table {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 850px) {
+  .like_table {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 849px) {
+  .like_table {
+    width: 100%;
+  }
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+.addRowBtn{
+margin-top: 0px;
+background-color: #94D0DF;
+}
+.parentRow{
+  position: relative;
+}
+.deleteRowBtn{
+background-color: #94D0DF;
+height: 30px;
+width:150px;
+margin-top: 0px;
+bottom:0px;
+right:0px;
+transform-origin: right bottom 0;
+transform: rotate(90deg);
+position: absolute;
+}
+
+table .form-control{
+  border-style: none;
+}
+table .colorHint{
+  border-left-style: solid;
+  border-right-style: solid;
+  border-right-width: 5px;
+  border-left-width: 5px;
+}
+table .badClr{
+  border-color: #ed3541;
+
+}
+table .changeRowBtn{
+background-color: #07458d;
+color: white;
+}
+table .neutralClr{
+  border-color: #07458d;
+}
+table .goodClr{
+  border-color: #f1b949;
+}
+
+td, th {
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+}
