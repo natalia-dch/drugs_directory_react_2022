@@ -9,6 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import Brief from '../contracts'
+import ListItem from '../components/basic_list/list_item';
+import AddBtn from '../components/basic_list/add_btn';
 
 const myDrugs = [
 ];
@@ -22,7 +24,8 @@ function BriefCard(props) {
                 props.handleClick(props.item.id);
                 if (props.item.id != -1) {
                     if (props.isDrugPage) {
-                        navigate("/drugs/"+props.item.id);
+                       console.log("/admin/drugs/"+props.item.id);
+                        navigate("/admin/drugs/"+props.item.id);
                     }
                 }
             }} >
@@ -76,7 +79,8 @@ interface IState {
 }
 
 
-const DrugsPure = (props: IProps) => {
+const AdminDrugList = (props: IProps) => {
+    const navigate = useNavigate();
     const { type = 'drugs' } = props;
     const [search, setSearch] = useState("");
     const [realSearch, setRealSearch] = useState("");
@@ -86,6 +90,13 @@ const DrugsPure = (props: IProps) => {
 
     const handleSearch = (value) => {
         setRealSearch(value)
+    }
+    const deleteItem = (id) => {
+      console.log("id"+id+"was deleted");
+//TODO 
+    }
+    const addNew = () => {
+       navigate(`/admin/drugs/-1`);
     }
     console.log(drugs)
     return (<div className={props.isDrugPage ? "wrapper" : "wrapperSL"}>
@@ -108,13 +119,19 @@ const DrugsPure = (props: IProps) => {
                     </InputAdornment>
                 ),
             }} />
+        <AddBtn value={"добавить лекарство" } handleClick={addNew}/>
         {isLoading ? "Loading..." :
             isError ? "Error" :
                 drugs.length > 0 ? (drugs.map((item) => (
-                    <BriefCard key={item.id} isBold={!props.isDrugPage && props.sItem === item.id}
-                        item={item}
-                        isDrugPage={props.isDrugPage}
-                        handleClick={() => props.handleClick(item.id)} />
+                    <ListItem key={item.id} item={item} canDeleteItem={true}
+                    deleteItem={() => deleteItem(item.id)}
+                        handleClick={() => {
+                            props.handleClick(item.id);
+                            if (item.id != -1) {
+                                   console.log("/admin/drugs/"+item.id);
+                                    navigate("/admin/drugs/"+item.id);
+                            }
+                        }} />
                 )
                 )
                 ) : "Ничего не нашлось. Сбросить фильтрацию?"
@@ -122,4 +139,4 @@ const DrugsPure = (props: IProps) => {
     </div>)
 }
 
-export default DrugsPure;
+export default AdminDrugList;

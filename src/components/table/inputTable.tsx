@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import './table.css';
 import Form from "react-bootstrap/Form";
 import Radio from '@mui/material/Radio';
@@ -8,29 +8,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from "react-bootstrap/Button";
 
 function Row(props) {
-  const [object, setObject] = useState(props.object); //object
   const [showAdd, setShowAdd] = useState(false);
   const changeField = (field,value) => {
-    let newObject = Object.assign({}, object);
+    let newObject = Object.assign({}, props.object);
     newObject[field] = value;
-    setObject(newObject);
-props.updateObject(newObject);
+    props.updateObject(newObject);
   }
-
-  const elems = Object.keys(object).map((key,index) =>
+  console.log(props.object);
+  const elems = Object.keys(props.object).map((key,index) =>
   {if(key!="id")
   {
     switch(key){
+      case "acting_substance":
+      return <SubstanceCell key={index} value={props.object[key]} field={key} save={changeField}/>
       case "adult":
-      return <PatientCell key={index} value={object[key]} field={key} save={changeField}/>
+      return <PatientCell key={index} value={props.object[key]} field={key} save={changeField}/>
       case "result":
-      return <ColorCell key={index} value={object[key]} field={key} save={changeField}/>
+      return <ColorCell key={index} value={props.object[key]} field={key} save={changeField}/>
       case "system":
-      return <SystemCell key={index} value={object[key]} field={key} save={changeField}/>
+      return <SystemCell key={index} value={props.object[key]} field={key} save={changeField}/>
       case "effects":
-      return <EffectsCell setHelper={props.setHelper} key={index} value={object[key]} field={key} save={changeField}/>
+      return <EffectsCell setHelper={props.setHelper} key={index} value={props.object[key]} field={key} save={changeField}/>
       default:
-      return <Cell key={index} value={object[key]} field={key} save={changeField}/>
+      return <Cell key={index} value={props.object[key]} field={key} save={changeField}/>
     }
     }}
 );
@@ -43,12 +43,11 @@ return(<tr className="parentRow"
 }
 
 function PatientCell(props) {
-  const [input, setInput] = useState(props.value);
   return(
     <td>
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
-      defaultValue={input}
+      value={props.value}
       name="radio-buttons-group"
       onChange={(event) => {props.save(props.field,event.target.value)}}
     >
@@ -60,25 +59,22 @@ function PatientCell(props) {
 }
 
 function ColorCell(props) {
-  console.log("i got" + props.value)
-  const [input, setInput] = useState(props.value);
-  const mapStyles = (input) => {
-    switch(input){
-      case 0:     console.log("neutralClr"); return "neutralClr";
-      case 1: console.log("badClr"); return "badClr";
-      case 2: console.log("goodClr"); return "goodClr";
+  const mapStyles = () => {
+    switch(props.value){
+      case 0: return "neutralClr";
+      case 1: return "badClr";
+      case 2: return "goodClr";
   }}
-  const [style, setStyle] = useState(mapStyles(props.value));
-
 
   return(
     <td>
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
-      value={input}
+      value={props.value}
       name="radio-buttons-group"
       onChange={(event) => {
-        setInput(event.target.value); props.save(props.field,event.target.value)}}
+        // setInput(event.target.value);
+        props.save(props.field,event.target.value)}}
     >
       <FormControlLabel value={0} style={{color: "#07458d"}} control={<Radio />} label="синяя" />
       <FormControlLabel value={1} style={{color: "#ed3541"}} control={<Radio />} label="красная" />
@@ -89,28 +85,35 @@ function ColorCell(props) {
 }
 
 function SystemCell(props) {
-  const [input, setInput] = useState(props.value);
 return(
   <td>
   <Form.Control
     autoFocus
     type="text"
-    value={input.system}
-    onKeyPress={(e) => {
- if (e.key === 'Enter') {
-   props.save(props.field,{  "id": props.value.id, "system": input});
- }}}
-    onChange={(e) => setInput(e.target.value)}
+    value={props.value.system}
+    onChange={(e) => props.save(props.field,{  "id": props.value.id, "system": e.target.value,})}
   />
   </td>
 )
 }
+
+function SubstanceCell(props) {
+return(
+  <td>
+  <Form.Control
+    autoFocus
+    type="text"
+    value={props.value.name}
+    onChange={(e) => props.save(props.field,{  "id": props.value.id, "name": e.target.value,})}
+  />
+  </td>
+)
+}
+
 function EffectsCell(props) {
-const [effects, setEffects] = useState(props.value);
-const [input, setInput] = useState(props.value.map((e)=>" "+e.effect).join(","));
-const createEffects = () => {
+const createEffects = (input) => {
   // props.setHelper(""); //TODO wrong split
-  let newObjs = input.split(', ').map((e,index)=> {return({"id":0,"effect":e})}) //TODO change id
+  let newObjs = input.split(', ').map((e,index)=> {return({"id":null,"effect":e})}) //TODO change id
   return newObjs;
 }
 return(
@@ -118,31 +121,27 @@ return(
   <Form.Control
     autoFocus
     type="text"
-    value={input}
-    onKeyPress={(e) => {
- if (e.key === 'Enter') {
-   createEffects();
-    props.save(props.field,createEffects());
- }}}
-    onChange={(e) => setInput(e.target.value)}
+    value={props.value.map((e)=>" "+e.effect).join(",")}
+    onChange={(e) => {
+       props.save(props.field,createEffects(e.target.value));
+    }}
   />
   </td>
 )
 }
 
 function Cell(props) {
-  const [input, setInput] = useState(props.value);
 return(
   <td>
   <Form.Control
     autoFocus
     type="text"
-    value={input}
-    onKeyPress={(e) => {
- if (e.key === 'Enter') {
-   props.save(props.field,input);
- }}}
-    onChange={(e) => setInput(e.target.value)}
+    value={props.value}
+ //    onKeyPress={(e) => {
+ // if (e.key === 'Enter') {
+ //   props.save(props.field,input);
+ // }}}
+    onChange={(e) => props.save(props.field,e.target.value)}
   />
   </td>
 )
@@ -152,6 +151,7 @@ return(
 
 export default function InputTable(props) {
 const [showAdd, setShowAdd] = useState(false);
+
 const changeData = (id,value) => {
   console.log(value);
   props.setData([
@@ -161,13 +161,22 @@ const changeData = (id,value) => {
       ]);
 }
 const addRow = () => {
-alert("row added");
+console.log(props.data)
+console.log(props.blank)
+props.setData([
+      ...props.data,
+      props.blank[0]
+    ]);
+console.log(props.data);
 }
 const deleteRow = (index) => {
-alert("row deleted"+index);
+console.log("deleting..."+index);
+let filteredArray = props.data.filter((item,index1) => index1 !== index)
+props.setData(filteredArray);
+
 }
 
-const data = props.data.map ((object,id) => {
+const ddata = props.data.map ((object,id) => {
   if(props.setHelper)
   return(<Row deleteRow={()=>deleteRow(id)} setHelper={props.setHelper} key={id} object={object} updateObject={(v)=>changeData(id,v)}/>)
     else
@@ -181,13 +190,17 @@ const data = props.data.map ((object,id) => {
     onMouseLeave={() => setShowAdd(false)}
     >
     <table >
+    <thead>
       {props.title &&
         <tr>
         {props.title.map ((el,index) => {
         return(<th key={index} >{el}</th>)
       })}
       </tr>}
-      {data}
+      </thead>
+      <tbody>
+      {ddata}
+      </tbody>
     </table>
     {showAdd && <Button onClick={addRow} variant="flat" className="like_table addRowBtn">добавить строку</Button>}
     </div>

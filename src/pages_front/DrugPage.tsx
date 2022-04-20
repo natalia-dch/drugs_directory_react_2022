@@ -6,124 +6,18 @@ import {
 import Drug from '../contracts'
 import './DrugPage.css';
 import Table from '../components/table/table';
-
-let lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque id nibh tortor id aliquet lectus proin nibh. Vivamus arcu felis bibendum ut tristique. Non odio euismod lacinia at quis risus sed. Ultrices tincidunt arcu non sodales neque sodales. Consequat id porta nibh venenatis cras sed. Porttitor leo a diam sollicitudin tempor id eu. Ultrices gravida dictum fusce ut placerat orci nulla. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Fusce ut placerat orci nulla pellentesque dignissim enim. Pretium nibh ipsum consequat nisl vel pretium. Tincidunt tortor aliquam nulla facilisi cras fermentum. Id faucibus nisl tincidunt eget nullam non nisi est.\n'+
-'\n'+
-'Neque viverra justo nec ultrices dui. Non arcu risus quis varius quam quisque id. Lobortis mattis aliquam faucibus purus. Ante in nibh mauris cursus mattis molestie a iaculis. Sit amet porttitor eget dolor morbi non. Egestas congue quisque egestas diam in arcu cursus euismod quis. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Nunc sed augue lacus viverra vitae. Imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Velit sed ullamcorper morbi tincidunt ornare massa eget egestas. Amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar.';
-let pk = "Является пролекарством и активизируется микобактериальной каталазой. Механизм действия связан с угнетением синтеза миколевой кислоты в клеточной стенке M.tuberculosis. Изониазид оказывает бактерицидное действие на микобактерии в стадии размножения и бактериостатическое - в стадии покоя. При монотерапии изониазидом к нему быстро (в 70% случаев) развивается устойчивость."
-let c = "Индивидуальная непереносимость препарата.\nЭпилепсия.\nТяжелые психозы.\nСклонность к судорожным припадкам.\nПолиомиелит в анамнезе.\nТоксический гепатит в анамнезе вследствие приема препаратов ГИНК.\nОстрая печеночная и почечная недостаточность."
-let role = "Лечение и профилактика туберкулеза различной локализации у взрослых и детей."+
-"\nДлительность приема не ограничена."
-let myDrug =
-{
-  "id": 0,
-  "first_line": true,
-  "inp_name": "этамбутол",
-  "trade_names": [
-  {"id": 0,
-  "trade_name": "Этамбутол-Эдвансд",
-  "pharm_form": "таблетки"},
-  {"id": 1,
-  "trade_name": "Этамбутол",
-  "pharm_form": "таблетки"}
-],
-  "pharm_dynamics": pk,
-  "pharm_kinetics": [{
-  "id": 0,
-  "name": "Адсорбция из ЖКТ",
-  "value": "Быстрая и полная, снижается при приеме пищи"
-},
-{
-  "id": 1,
-  "name": "Биодоступность, %",
-  "value": "80-90"
-},
-{
-  "id": 2,
-  "name": "Связь с белками плазмы крови, %",
-  "value": "До 10"
-},
-{
-  "id": 3,
-  "name": "Биотрансформация",
-  "value": "В печени путем ацетилирования до неактивных продуктов"
-},
-{
-  "id": 4,
-  "name": "Проникновение через ГЭБ",
-  "value": "хорошее"
-},
-{
-  "id": 5,
-  "name": "Т1/2,ч",
-  "value": "2-3"
-}],
-  "side_effects": [{
-  id: 0,
-  effects: [{
-"id": 0,
-"effect": "тошнота",
-},{
-"id": 0,
-"effect": "рвота",
-}],
-  system: {  "id": 0, "system": "Со стороны ЖКТ"}
-},
-{
-id: 0,
-effects: [{
-"id": 0,
-"effect": "гинекомастия дисменорея у женщин",
-},{
-"id": 0,
-"effect": "«кушингоид»",
-}],
-system: {  "id": 0, "system": "Со стороны эндокринной системы"}
-},{
-id: 0,
-effects: [{
-"id": 0,
-"effect": "головная боль",
-},{
-"id": 0,
-"effect": "головокружения",
-}],
-system: {  "id": 0, "system": "Со стороны ЦНС"}
-}],
-  "contraindications": c,
-  "role_in_treatment": role,
-  "dosages": [{
-  "id": 0,
-  "adult": true,
-  "pharm_form": "Табл. 0,1г; 0,2г; 0,3г.",
-  "daily_dose": "4-6 мг/кг",
-  "max_daily_dose": "600мг"
-},{
-  "id": 1,
-  "adult": true,
-  "pharm_form": "Раствор для инъекций, 100 мг/мл, по 5 мл.",
-  "daily_dose": "10-15мг/кг",
-  "max_daily_dose": "200-300 мг",
-}],
-  "foodInfo": {
-  "recommendations": "string",
-    "comment": lorem },
-  "interactions": [
-    {"id":0,"acting_substance":"Пенициллины, цефалоспорины",
-  "kind_of_interaction":"Синергизм при раздельном введении",
-  "clinical_consequence":"",
-  "result":0},
-{"id":1,"acting_substance":"Аминогликозиды, при одновременном или последовательном применении двух препаратов и более",
-"kind_of_interaction":"Повышение риска ототоксичности, нефротоксичности, нервно-мышечной блокады.",
-"clinical_consequence":"Совместное применение не рекомендуется",
-"result":1},
-]
-}
+import { useQuery } from 'react-query';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function DrugPage () {
   //get Drug
+  const navigate = useNavigate();
   const { drugId } = useParams();
-  const [drug, setDrug] = useState(myDrug);
+  const { isLoading, isError, data: drug } = useQuery(['drug', drugId], () => axios.get<Drug>(`http://localhost:8080/api/drugs/${drugId}`).then(v => v.data));
+  if (isLoading) return "Loading...";
+  if (isError) return "Error";
+  console.log(drug);
   let tradenames = drug.trade_names.map((tn)=>[tn.trade_name,tn.pharm_form])
   let pharm_kinetics = drug.pharm_kinetics.map((e)=>[e.name,e.value]);
   let side_effects = drug.side_effects.map((s)=>[s.system.system,s.effects.map((e)=>e.effect+", ")]);
@@ -131,7 +25,7 @@ export default function DrugPage () {
   let isAdult = s.adult?"взрослый":"ребенок";
     return([s.pharm_form,isAdult,s.daily_dose,s.max_daily_dose]);
   });
-  let interactions = drug.interactions.map((i)=>[i.acting_substance,i.kind_of_interaction,i.clinical_consequence])
+  let interactions = drug.interactions.map((i)=>[i.acting_substance.name,i.kind_of_interaction,i.clinical_consequence])
   return(<div className="DrugWrapper wrapper">
   <h2>{drug.inp_name}</h2>
   <p className="drugH">{drug.first_line?"препарат первого ряда":"препарат второго ряда"}</p>
@@ -143,14 +37,14 @@ export default function DrugPage () {
   <Table data={pharm_kinetics} />
   <h5 className="drugH">Побочные эффекты:</h5>
     <Table title={["система","эффект"]} data={side_effects} />
-  <h5 className="drugH">Противопоказания:</h5>
-  <p className="drugH">{drug.contraindications}</p>
-  <h5 className="drugH">Место в лечении туберкулеза:</h5>
-  <p className="drugH">{drug.role_in_treatment}</p>
-  <h5 className="drugH">Дозы:</h5>
-  <Table title={["лекарственная форма","тип пациента","сут. доза","макс. сут. доза"]} data={dosages} />
-  <h5 className="drugH">Лекарственные взаимодействия:</h5>
-  <Table title={["действующее вещество","вид взаимодействия","клиническое последствие"]} data={interactions} />
+    <h5 className="drugH">Противопоказания:</h5>
+    <p className="drugH">{drug.contraindications}</p>
+    <h5 className="drugH">Место в лечении туберкулеза:</h5>
+    <p className="drugH">{drug.role_in_treatment}</p>
+    <h5 className="drugH">Дозы:</h5>
+    <Table title={["лекарственная форма","тип пациента","сут. доза","макс. сут. доза"]} data={dosages} />
+    <h5 className="drugH">Лекарственные взаимодействия:</h5>
+    <Table title={["действующее вещество","вид взаимодействия","клиническое последствие"]} data={interactions} />
 
     </div>)
   }
