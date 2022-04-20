@@ -33,10 +33,24 @@ const blankDrug =
   "contraindications": "",
   "role_in_treatment": "",
   "dosages": [{"id": null, "adult": true, "pharm_form": "", "daily_dose": "", "max_daily_dose": ""}],
-  "foodInfo": {  "recomendations": "", "comment": ""},
+  "foodInfo": {  "recommendations": "", "comment": ""},
   "interactions": [
     {"id":null,"acting_substance":{"id":null,"name":""}, "kind_of_interaction":"","clinical_consequence":""}
-]
+],
+"pregnancy_info": {
+  fda_category: '',
+  usage: '',
+  additional_info: ''
+},
+"liver_dosage_info": {
+  dose_change_prerequisites: '',
+  creatinine_based_dosages: [
+    // {
+    //   creatinine_clearance: '',
+    //   dosage_fraction: '',
+    // }
+  ]
+},
 }
 
 
@@ -60,7 +74,7 @@ export default function FormDrug (props) {
 
   const saveAll = () => {
     let newDrug =  {
-     "id": props.drugId,
+     "id": null, //props.drugId, // при создании айди должен быть null
      "first_line": line,
      "inp_name": inp,
      "trade_names": names,
@@ -71,9 +85,25 @@ export default function FormDrug (props) {
      "role_in_treatment": role_in_treatment,
      "dosages": dosages,
      "interactions": interactions,
-     "pregnancy_info": null,
-     "liverDosageInfo": null,
-     "foodInfo": foodInfo
+     "acting_substance": {
+       id: null,
+       name: inp,
+     },
+     "pregnancy_info": {
+       fda_category: '',
+       usage: '',
+       additional_info: ''
+     },
+     "liver_dosage_info": {
+       dose_change_prerequisites: '',
+       creatinine_based_dosages: [
+         // {
+         //   creatinine_clearance: '',
+         //   dosage_fraction: '',
+         // }
+       ]
+     },
+     "food_info": foodInfo
    }
    console.log(props.drug);
    props.drug ? props.saveDrug(newDrug) : props.addNewDrug(newDrug);

@@ -32,7 +32,7 @@ export default function DrugPage () {
   <h5 className="drugH">Торговые наименования и форма выпуска:</h5>
   <Table title={["торговые наименования","форма выпуска"]} data={tradenames} />
   <h5 className="drugH">Фармакодинамика:</h5>
-  <p className="drugH">{drug.pharm_dynamics}</p>
+  <p className="drugH" dangerouslySetInnerHTML={{__html: drug.pharm_dynamics}} />
   <h5 className="drugH">Фармакокинетика:</h5>
   <Table data={pharm_kinetics} />
   <h5 className="drugH">Побочные эффекты:</h5>
