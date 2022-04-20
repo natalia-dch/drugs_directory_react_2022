@@ -33,9 +33,9 @@ const blankDrug =
   "contraindications": "",
   "role_in_treatment": "",
   "dosages": [{"id": null, "adult": true, "pharm_form": "", "daily_dose": "", "max_daily_dose": ""}],
-  "foodInfo": null,
+  "foodInfo": {  "recomendations": "", "comment": ""},
   "interactions": [
-    {"id":null,"acting_substance":"", "kind_of_interaction":"","clinical_consequence":"","result":0}
+    {"id":null,"acting_substance":{"id":null,"name":""}, "kind_of_interaction":"","clinical_consequence":""}
 ]
 }
 
@@ -53,6 +53,7 @@ export default function FormDrug (props) {
   const [pharmKinetics, setPharmKinetics] = useState(myDrug.pharm_kinetics);
   const [contraindications, setContraindications] = useState(myDrug.contraindications);
   const [sideEffects, setSideEffects] = useState(myDrug.side_effects);
+  const [foodInfo, setFoodInfo] = useState(myDrug.foodInfo);
   const [interactions, setInteractions] = useState(myDrug.interactions.map(obj => ({ ...obj, result: 0 })));
   const [role_in_treatment, setRole_in_treatment] = useState(myDrug.role_in_treatment);
   const [line, setLine] = useState(myDrug.first_line);
@@ -72,9 +73,10 @@ export default function FormDrug (props) {
      "interactions": interactions,
      "pregnancy_info": null,
      "liverDosageInfo": null,
-     "foodInfo": null
+     "foodInfo": foodInfo
    }
-   props.saveDrug(newDrug);
+   console.log(props.drug);
+   props.drug ? props.saveDrug(newDrug) : props.addNewDrug(newDrug);
    // props.changeDrug(newDrug,drugId);
   }
 
@@ -112,6 +114,23 @@ export default function FormDrug (props) {
   <InputTable blank={blankDrug["dosages"]} className="like_table" title={["тип пациента","лекарственная форма","сут. доза","макс. сут. доза"]} data={dosages} setData={setDosages}/>
   <h5 className="drugH">Лекарственные взаимодействия:</h5>
   <InputTable blank={blankDrug["interactions"]} title={["действующее вещество","вид взаимодействия","клиническое последствие","цветовая подсказка"]} data={interactions} setData={setInteractions} />
+  <h5 className="drugH">Взаимодействие с пищей</h5>
+  <p>Рекомендации</p>
+  <Form.Control
+    className="like_table"
+    autoFocus
+    type="text"
+    value={foodInfo.recommendations}
+    onChange={(e) => setFoodInfo({...foodInfo, recommendations: e.target.value})}
+  />
+    <p>Комментарии</p>
+    <Form.Control
+      className="like_table"
+      autoFocus
+      type="text"
+      value={foodInfo.comment}
+      onChange={(e) => setFoodInfo({...foodInfo, comment: e.target.value})}
+    />
   <Button className="like_table" onClick={saveAll} variant="flat" size="lg">
     Сохранить
   </Button>

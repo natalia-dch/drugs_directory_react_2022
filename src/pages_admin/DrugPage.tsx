@@ -20,8 +20,19 @@ export default function DrugPage () {
   // if (isError) return "Error";
   console.log(drug);
   const saveDrug = (drug) => {
-       console.log("savedDrug");
+       console.log("updatedDrug"); //TODO
        navigate(`/admin/drugs`);
   }
-return(<FormDrug drugId={drugId} saveDrug={saveDrug} drug={isError ? null : drug}/>)
+  const addNewDrug = (drug) => {
+    console.log(drug);
+       axios.post<Drug>(`http://localhost:8080/api/drugs`,drug).then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+       console.log("addedNewDrug"); //TODO
+       navigate(`/admin/drugs`);
+  }
+return(<FormDrug drugId={drugId} saveDrug={saveDrug} addNewDrug={addNewDrug} drug={isError ? null : drug}/>)
   }
