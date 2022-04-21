@@ -33,7 +33,7 @@ const blankDrug =
   "contraindications": "",
   "role_in_treatment": "",
   "dosages": [{"id": null, "adult": true, "pharm_form": "", "daily_dose": "", "max_daily_dose": ""}],
-  "foodInfo": {  "recommendations": "", "comment": ""},
+  "food_info": {  "recommendations": "", "comment": ""},
   "interactions": [
     {"id":null,"acting_substance":{"id":null,"name":""}, "kind_of_interaction":"","clinical_consequence":""}
 ],
@@ -58,7 +58,9 @@ export default function FormDrug (props) {
   //get Drug
   const navigate = useNavigate();
   //   alert("drugID"+(drugId === -1));
-  const [myDrug, setDrug] = useState(props.drug== null ? blankDrug : props.drug);
+  console.log(props.drugId);
+  console.log(props.drug);
+  const [myDrug, setDrug] = useState(props.drugId == -1 ? blankDrug : props.drug);
   const [inp, setInp] = useState(myDrug.inp_name);
   const [names, setNames] = useState(myDrug.trade_names);
   const [dosages, setDosages] = useState(myDrug.dosages);
@@ -67,14 +69,14 @@ export default function FormDrug (props) {
   const [pharmKinetics, setPharmKinetics] = useState(myDrug.pharm_kinetics);
   const [contraindications, setContraindications] = useState(myDrug.contraindications);
   const [sideEffects, setSideEffects] = useState(myDrug.side_effects);
-  const [foodInfo, setFoodInfo] = useState(myDrug.foodInfo);
+  const [foodInfo, setFoodInfo] = useState(myDrug.food_info);
   const [interactions, setInteractions] = useState(myDrug.interactions.map(obj => ({ ...obj, result: 0 })));
   const [role_in_treatment, setRole_in_treatment] = useState(myDrug.role_in_treatment);
   const [line, setLine] = useState(myDrug.first_line);
 
   const saveAll = () => {
     let newDrug =  {
-     "id": null, //props.drugId, // при создании айди должен быть null
+     "id": props.drugId === -1? null : props.drugId, // при создании айди должен быть null
      "first_line": line,
      "inp_name": inp,
      "trade_names": names,
@@ -106,10 +108,10 @@ export default function FormDrug (props) {
      "food_info": foodInfo
    }
    console.log(props.drug);
+   console.log(foodInfo);
    props.drug ? props.saveDrug(newDrug) : props.addNewDrug(newDrug);
    // props.changeDrug(newDrug,drugId);
   }
-
   return(<div className="DrugWrapper wrapper">
   <Form.Control
     className="like_table"

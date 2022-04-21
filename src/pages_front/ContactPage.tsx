@@ -5,12 +5,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormHelperText from '@mui/material/FormHelperText';
+import NotifyDialog from '../components/dialogs/notifyDialog';
 import './Contact.css';
 
 function Contact() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isDoctor, setIsDoctor] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const [message, setMessage] = useState("");
   const [helperText, setHelperText] = React.useState("");
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -38,12 +40,15 @@ function Contact() {
     //TODO send feedback to doctor
     if(validateForm())
     {
-      alert("! Ответ придёт на указанную почту в течении 7 рабочих дней.")}
+      setOpen(true);
+      // alert("! Ответ придёт на указанную почту в течении 7 рабочих дней.")
+    }
     // event.preventDefault();
   }
 
   return (
     <div className="Login">
+        {open && <NotifyDialog isOpen={open} handleClose={() => setOpen(false)}/>}
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control

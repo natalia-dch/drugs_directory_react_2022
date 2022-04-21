@@ -110,7 +110,7 @@ const DrugsPure = (props: IProps) => {
             }} />
         {isLoading ? "Loading..." :
             isError ? "Error" :
-                drugs.length > 0 ? (drugs.map((item) => (
+                drugs.length > 0 ? (drugs.filter((item)=> item.name !="").map((item) => (
                     <BriefCard key={item.id} isBold={!props.isDrugPage && props.sItem === item.id}
                         item={item}
                         isDrugPage={props.isDrugPage}

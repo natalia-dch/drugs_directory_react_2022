@@ -14,7 +14,7 @@ function Row(props) {
     newObject[field] = value;
     props.updateObject(newObject);
   }
-  console.log(props.object);
+  // console.log(props.object);
   const elems = Object.keys(props.object).map((key,index) =>
   {if(key!="id")
   {

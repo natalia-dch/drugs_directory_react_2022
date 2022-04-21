@@ -18,8 +18,15 @@ export default function DrugPage () {
   const { isLoading, isError, data: drug } = useQuery(['drug', drugId], () => axios.get<Drug>(`http://localhost:8080/api/drugs/${drugId}`).then(v => v.data));
   // if (isLoading) return "Loading...";
   // if (isError) return "Error";
-  console.log(drug);
+  console.log(`http://localhost:8080/api/drugs/`+drugId);
   const saveDrug = (drug) => {
+    axios.put<Drug>(`http://localhost:8080/api/drugs`,drug).then(function (response) {
+ console.log(response);
+ props.flag();
+})
+.catch(function (error) {
+ console.log(error);
+});
        console.log("updatedDrug"); //TODO
        navigate(`/admin/drugs`);
   }
@@ -27,6 +34,7 @@ export default function DrugPage () {
     console.log(drug);
        axios.post<Drug>(`http://localhost:8080/api/drugs`,drug).then(function (response) {
     console.log(response);
+    props.flag();
   })
   .catch(function (error) {
     console.log(error);
@@ -34,5 +42,9 @@ export default function DrugPage () {
        console.log("addedNewDrug"); //TODO
        navigate(`/admin/drugs`);
   }
-return(<FormDrug drugId={drugId} saveDrug={saveDrug} addNewDrug={addNewDrug} drug={isError ? null : drug}/>)
+// if (isLoading || drug)
+if (isLoading && drugId != -1)
+  return <p>Загрузка</p>
+else
+  return(  <FormDrug drugId={drugId} saveDrug={saveDrug} addNewDrug={addNewDrug} drug={isError ? null : drug}/>)
   }

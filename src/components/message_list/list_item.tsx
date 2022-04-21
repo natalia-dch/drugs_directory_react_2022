@@ -11,6 +11,7 @@ function ListItem(props) {
     return(
       <div key={props.item.id} className="messageCard bigCard relativeCard"
       onMouseEnter={() => setIsShown(true)}
+      onClick={() => setIsShown(!isShown)}
       onMouseLeave={() => setIsShown(false)}>
       {props.canDeleteItem && isShown &&
         <>

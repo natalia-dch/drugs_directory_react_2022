@@ -84,18 +84,26 @@ const AdminDrugList = (props: IProps) => {
     const { type = 'drugs' } = props;
     const [search, setSearch] = useState("");
     const [realSearch, setRealSearch] = useState("");
-
+    const [updateFlag, setUpdFl] = useState(false);
     const { data: drugs, isLoading, isError
-    } = useQuery(['brief', realSearch, type], () => axios.get<Brief[]>(`http://localhost:8080/api/${type}/brief?search=${realSearch}`).then(v => v.data));
+    } = useQuery(['brief', realSearch, type,props.flag, updateFlag], () => axios.get<Brief[]>(`http://localhost:8080/api/${type}/brief?search=${realSearch}`).then(v => v.data));
 
     const handleSearch = (value) => {
         setRealSearch(value)
     }
     const deleteItem = (id) => {
+      axios.delete(`http://localhost:8080/api/drugs/`+id).then(function (response) {
+   console.log(response);
+   setUpdFl(!updateFlag)
+ })
+ .catch(function (error) {
+   console.log(error);
+ });
       console.log("id"+id+"was deleted");
-//TODO 
+//TODO
     }
     const addNew = () => {
+       setUpdFl(!updateFlag);
        navigate(`/admin/drugs/-1`);
     }
     console.log(drugs)

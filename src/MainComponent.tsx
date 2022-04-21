@@ -32,10 +32,17 @@ class Main extends Component {
   this.state = {
       drugToShow: -1,
       itemToChange: -1,
+      updateFlug: false,
     }
     this.showDrug = this.showDrug.bind(this);
+    this.flag = this.flag.bind(this);
     this.changeItem = this.changeItem.bind(this);
   }
+flag(){
+  this.setState({
+    updateFlug: !this.state.updateFlug,
+  });
+}
 showDrug(id) {
       if(id!=-1)
       {this.setState({
@@ -63,8 +70,8 @@ changeItem(id) {
           <Route path="/video" element={<div><Header /><Video /><Footer/></div>} />
           <Route path="/admin" element={<Login />} />
           <Route path="/admin/moderators" element={<div><AdminMenu/><AdminModeratorsList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
-          <Route path="/admin/drugs" element={<div><AdminMenu/><AdminDrugList handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
-          <Route path="admin/drugs/:drugId" element={<div><AdminMenu/><AdminDrugPage /></div>} />
+          <Route path="/admin/drugs" element={<div><AdminMenu/><AdminDrugList flag={this.state.updateFlug} handleClick={this.showDrug} isDrugPage={true} sItem={this.state.drugToShow}/></div>} />
+          <Route path="admin/drugs/:drugId" element={<div><AdminMenu/><AdminDrugPage flag={this.flag} /></div>} />
           <Route path="/admin/news" element={<div><AdminMenu/><ChangeNews/></div>} />
           <Route path="/admin/video" element={<div><AdminMenu/><ChangeVideos/></div>} />
           <Route path="/admin/recs" element={<div><AdminMenu/><ChangeRecs/></div>} />

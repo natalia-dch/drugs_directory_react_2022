@@ -18,7 +18,7 @@ function VideoCard(props) {
      onMouseEnter={() => setIsShown(true)}
      onMouseLeave={() => setIsShown(false)}
      item xs={isMobile? 12 : (isMedium ? 6 : 4)}>
-     {isShown && (<p className="deleteBtnV" onClick={()=> props.delete(props.id)}>удалить видео?</p>)}
+     {(isShown || isMobile) && (<p className="deleteBtnV" onClick={()=> props.delete(props.id)}>удалить видео?</p>)}
     <iframe width="100%" src={props.src}
     title="YouTube video player" frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -40,7 +40,7 @@ const validateForm = () => {
   return (
     <div>
       <Grid container spacing={2}>
-      <Grid item xs={9}>
+      <Grid item xs={isMedium? 12 : 9}>
         <Form.Group size="lg" className="form-inline" controlId="link">
           <Form.Control
             className="addVidForm"
@@ -51,7 +51,7 @@ const validateForm = () => {
           />
         </Form.Group>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={isMedium? 12 : 3}>
         <Button variant="flat" size="lg" onClick={() => props.handleSubmit(link)}>Добавить видео</Button>
         </Grid>
         </Grid>

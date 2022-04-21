@@ -32,8 +32,8 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     //TODO send feedback to doctor
-    if(validateForm())
-    { 
+    if(validateForm() & email=="natata0303@gmail.com" & password=="123456")
+    {
       navigate("/admin/moderators");}
     // event.preventDefault();
   }
